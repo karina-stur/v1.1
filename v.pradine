@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <iomanip> // nustatyti tikslumą ir formatą
+using namespace std;
+
+// Struktūra, kurioje bus saugoma studento informacija
+struct Studentas {
+    string vardas;
+    string pavarde;
+    vector<int> namuDarbai;
+    int egzaminas;
+};
+
+// Funkcija, skirta skaičiuoti galutinį balą
+double skaiciuotiGalutiniBala(const vector<int>& namuDarbai, int egzaminas) {
+    // Apskaičiuoti namų darbų vidurkį
+    double namuDarbaiVidurkis = 0;
+    for(int nd : namuDarbai) {
+        namuDarbaiVidurkis += nd;
+    }
+    namuDarbaiVidurkis /= namuDarbai.size();
+
+    // Galutinio balo formulė: 0.5 * namų darbų vidurkis + 0.5 * egzamino balas
+    return 0.5 * namuDarbaiVidurkis + 0.5 * egzaminas;
+}
+
+int main() {
+    vector<Studentas> studentai;  // Sukursime vektorių studentų sąrašui
+    int kiekMokiniu;
+
+    // Paklausti, kiek mokinių bus įvesta
+    cout << "Kiek studentų norite įvesti? ";
+    cin >> kiekMokiniu;
+
+    for(int i = 0; i < kiekMokiniu; i++) {
+        Studentas studentas;
+        cout << "Įveskite " << i + 1 << "-ojo studento vardą: ";
+        cin >> studentas.vardas;
+        cout << "Įveskite " << i + 1 << "-ojo studento pavardę: ";
+        cin >> studentas.pavarde;
+
+        // Įvesti 5 namų darbų rezultatus
+        cout << "Įveskite 5 namų darbų rezultatus:" << endl;
+        for (int j = 0; j < 5; j++) {
+            int rezultatas;
+            cout << j + 1 << "-asis pažymys: ";
+            cin >> rezultatas;
+            studentas.namuDarbai.push_back(rezultatas);
+        }
+
+        // Įvesti egzamino rezultatą
+        cout << "Įveskite egzamino rezultatą: ";
+        cin >> studentas.egzaminas;
+
+        // Pridėti studentą į vektorių
+        studentai.push_back(studentas);
+    }
+
+    // Išvesti lentelę su rezultatais visiems studentams
+    cout << endl;
+    cout << left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(15) << "Galutinis (Vid.)" << endl;
+    cout << "----------------------------------------------------------" << endl;
+    for (const auto& studentas : studentai) {
+        double galutinisBalas = skaiciuotiGalutiniBala(studentas.namuDarbai, studentas.egzaminas);
+        cout << left << setw(15) << studentas.vardas 
+                     << setw(15) << studentas.pavarde 
+                     << setw(15) << fixed << setprecision(2) << galutinisBalas << endl;
+    }
+
+    return 0;
+}
