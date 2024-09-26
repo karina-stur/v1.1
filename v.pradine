@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm> // sort funkcijai
 #include <iomanip> // nustatyti tikslumą ir formatą
 using namespace std;
 
@@ -22,6 +23,22 @@ double skaiciuotiGalutiniBala(const vector<int>& namuDarbai, int egzaminas) {
 
     // Galutinio balo formulė: 0.5 * namų darbų vidurkis + 0.5 * egzamino balas
     return 0.5 * namuDarbaiVidurkis + 0.5 * egzaminas;
+}
+
+// Funkcija, skirta skaičiuoti galutinį balą pagal medianą
+double skaiciuotiGalutiniMediana(vector<int> namuDarbai, int egzaminas) {
+    // Surūšiuojame namų darbų balus
+    sort(namuDarbai.begin(), namuDarbai.end());
+    double mediana;
+    int size = namuDarbai.size();
+
+    if (size % 2 == 0) {
+        mediana = (namuDarbai[size / 2 - 1] + namuDarbai[size / 2]) / 2.0;
+    } else {
+        mediana = namuDarbai[size / 2];
+    }
+
+    return 0.5 * mediana + 0.5 * egzaminas;
 }
 
 int main() {
@@ -56,12 +73,26 @@ int main() {
         studentai.push_back(studentas);
     }
 
+        // Pasirinkti skaičiavimo metodiką: vidurkis arba mediana
+    char pasirinkimas;
+    cout << "Pasirinkite galutinio balo skaičiavimo būdą (v - vidurkis, m - mediana): ";
+    cin >> pasirinkimas;
+
     // Išvesti lentelę su rezultatais visiems studentams
     cout << endl;
-    cout << left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(15) << "Galutinis (Vid.)" << endl;
+    cout << left << setw(15) << "Vardas" << setw(15) << "Pavarde";
+    if (pasirinkimas == 'v') {
+        cout << setw(20) << "Galutinis (Vid.)" << endl;
+    } else if (pasirinkimas == 'm') {
+        cout << setw(20) << "Galutinis (Med.)" << endl;
+    }
     cout << "----------------------------------------------------------" << endl;
-    for (const auto& studentas : studentai) {
-        double galutinisBalas = skaiciuotiGalutiniBala(studentas.namuDarbai, studentas.egzaminas);
+    double galutinisBalas;
+        if (pasirinkimas == 'v') {
+            galutinisBalas = skaiciuotiGalutiniVidurki(studentas.namuDarbai, studentas.egzaminas);
+        } else if (pasirinkimas == 'm') {
+            galutinisBalas = skaiciuotiGalutiniMediana(studentas.namuDarbai, studentas.egzaminas);
+        }
         cout << left << setw(15) << studentas.vardas 
                      << setw(15) << studentas.pavarde 
                      << setw(15) << fixed << setprecision(2) << galutinisBalas << endl;
