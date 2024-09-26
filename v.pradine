@@ -1,10 +1,11 @@
 #include <iostream>
 #include <vector>
-#include <algorithm> // sort funkcijai
-#include <iomanip> // nustatyti tikslumą ir formatą
+#include <algorithm>
+#include <iomanip>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
-// Struktūra, kurioje bus saugoma studento informacija
 struct Studentas {
     string vardas;
     string pavarde;
@@ -12,75 +13,72 @@ struct Studentas {
     int egzaminas;
 };
 
-// Funkcija, skirta skaičiuoti galutinį balą
-double skaiciuotiGalutiniBala(const vector<int>& namuDarbai, int egzaminas) {
-    // Apskaičiuoti namų darbų vidurkį
-    double namuDarbaiVidurkis = 0;
-    for(int nd : namuDarbai) {
-        namuDarbaiVidurkis += nd;
+double skaiciuotiGalutiniVidurki(const vector<int>& namuDarbai, int egzaminas) {
+    double vidurkis = 0;
+    for (int nd : namuDarbai) {
+        vidurkis += nd;
     }
-    namuDarbaiVidurkis /= namuDarbai.size();
-
-    // Galutinio balo formulė: 0.5 * namų darbų vidurkis + 0.5 * egzamino balas
-    return 0.5 * namuDarbaiVidurkis + 0.5 * egzaminas;
+    vidurkis /= namuDarbai.size();
+    return 0.5 * vidurkis + 0.5 * egzaminas;
 }
 
-// Funkcija, skirta skaičiuoti galutinį balą pagal medianą
 double skaiciuotiGalutiniMediana(vector<int> namuDarbai, int egzaminas) {
-    // Surūšiuojame namų darbų balus
     sort(namuDarbai.begin(), namuDarbai.end());
     double mediana;
     int size = namuDarbai.size();
-
     if (size % 2 == 0) {
         mediana = (namuDarbai[size / 2 - 1] + namuDarbai[size / 2]) / 2.0;
     } else {
         mediana = namuDarbai[size / 2];
     }
-
     return 0.5 * mediana + 0.5 * egzaminas;
 }
 
-int main() {
-    vector<Studentas> studentai;  // Sukursime vektorių studentų sąrašui
-    int kiekMokiniu;
+int generuotiAtsitiktiniBala(int min, int max) {
+    return rand() % (max - min + 1) + min;
+}
 
-    // Paklausti, kiek mokinių bus įvesta
+int main() {
+    srand(static_cast<unsigned>(time(0)));
+
+    vector<Studentas> studentai;
+    int kiekMokiniu;
+    int namuDarbaiKiekis;
+
     cout << "Kiek studentų norite įvesti? ";
     cin >> kiekMokiniu;
-    cin.ignore();  // Ignoruoti naujos eilutės simbolį po skaičiaus įvedimo
+    cin.ignore(); // Clear newline character
 
-    for(int i = 0; i < kiekMokiniu; i++) {
+    cout << "Kiek namų darbų pažymių norite generuoti kiekvienam studentui? ";
+    cin >> namuDarbaiKiekis;
+    cin.ignore(); // Clear newline character
+
+    for (int i = 0; i < kiekMokiniu; i++) {
         Studentas studentas;
-        cout << "Įveskite " << i + 1 << "-ojo studento vardą: ";
-        cin >> studentas.vardas;
-        cout << "Įveskite " << i + 1 << "-ojo studento pavardę: ";
-        cin >> studentas.pavarde;
 
-        // Įvesti nežinomą skaičių namų darbų rezultatų
-        cout << "Įveskite namų darbų rezultatus (įveskite -1, kad baigtumėte įvedimą):" << endl;
-        while (true) {
-            int rezultatas;
-            cout << "Pažymys: ";
-            cin >> rezultatas;
-            if (rezultatas == -1) break;  // Baigti įvedimą jei pažymys yra -1
-            studentas.namuDarbai.push_back(rezultatas);
+        cout << "Įveskite " << i + 1 << "-ojo studento vardą: ";
+        getline(cin, studentas.vardas); // Correctly reads the name
+
+        cout << "Įveskite " << i + 1 << "-ojo studento pavardę: ";
+        getline(cin, studentas.pavarde); // Correctly reads the surname
+
+        // Generuojami atsitiktiniai namų darbų rezultatai
+        for (int j = 0; j < namuDarbaiKiekis; j++) {
+            studentas.namuDarbai.push_back(generuotiAtsitiktiniBala(1, 10));
         }
 
-        // Įvesti egzamino rezultatą
-        cout << "Įveskite egzamino rezultatą: ";
-        cin >> studentas.egzaminas;
+        // Atsitiktinio egzamino rezultato generavimas
+        studentas.egzaminas = generuotiAtsitiktiniBala(1, 10);
 
         // Pridėti studentą į vektorių
         studentai.push_back(studentas);
     }
 
-    // Pasirinkti skaičiavimo metodiką: vidurkis arba mediana
     char pasirinkimas;
     cout << "Pasirinkite galutinio balo skaičiavimo būdą (v - vidurkis, m - mediana): ";
     cin >> pasirinkimas;
+    cin.ignore(); // Clear newline character
 
-    // Išvesti lentelę su rezultatais visiems studentams
     cout << endl;
     cout << left << setw(15) << "Vardas" << setw(15) << "Pavarde";
     if (pasirinkimas == 'v') {
@@ -88,7 +86,7 @@ int main() {
     } else if (pasirinkimas == 'm') {
         cout << setw(20) << "Galutinis (Med.)" << endl;
     }
-    cout << "----------------------------------------------------------" << endl;
+    cout << "--------------------------------------------------------------" << endl;
 
     for (const auto& studentas : studentai) {
         double galutinisBalas;
@@ -97,10 +95,12 @@ int main() {
         } else if (pasirinkimas == 'm') {
             galutinisBalas = skaiciuotiGalutiniMediana(studentas.namuDarbai, studentas.egzaminas);
         }
-        cout << left << setw(15) << studentas.vardas 
-            << setw(15) << studentas.pavarde 
-            << setw(15) << fixed << setprecision(2) << galutinisBalas << endl;
+
+        cout << left << setw(15) << studentas.vardas
+             << setw(15) << studentas.pavarde
+             << setw(20) << fixed << setprecision(2) << galutinisBalas << endl;
     }
 
     return 0;
 }
+
