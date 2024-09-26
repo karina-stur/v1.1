@@ -48,6 +48,7 @@ int main() {
     // Paklausti, kiek mokinių bus įvesta
     cout << "Kiek studentų norite įvesti? ";
     cin >> kiekMokiniu;
+    cin.ignore();  // Ignoruoti naujos eilutės simbolį po skaičiaus įvedimo
 
     for(int i = 0; i < kiekMokiniu; i++) {
         Studentas studentas;
@@ -56,12 +57,13 @@ int main() {
         cout << "Įveskite " << i + 1 << "-ojo studento pavardę: ";
         cin >> studentas.pavarde;
 
-        // Įvesti 5 namų darbų rezultatus
-        cout << "Įveskite 5 namų darbų rezultatus:" << endl;
-        for (int j = 0; j < 5; j++) {
+        // Įvesti nežinomą skaičių namų darbų rezultatų
+        cout << "Įveskite namų darbų rezultatus (įveskite -1, kad baigtumėte įvedimą):" << endl;
+        while (true) {
             int rezultatas;
-            cout << j + 1 << "-asis pažymys: ";
+            cout << "Pažymys: ";
             cin >> rezultatas;
+            if (rezultatas == -1) break;  // Baigti įvedimą jei pažymys yra -1
             studentas.namuDarbai.push_back(rezultatas);
         }
 
@@ -73,7 +75,7 @@ int main() {
         studentai.push_back(studentas);
     }
 
-        // Pasirinkti skaičiavimo metodiką: vidurkis arba mediana
+    // Pasirinkti skaičiavimo metodiką: vidurkis arba mediana
     char pasirinkimas;
     cout << "Pasirinkite galutinio balo skaičiavimo būdą (v - vidurkis, m - mediana): ";
     cin >> pasirinkimas;
@@ -87,15 +89,17 @@ int main() {
         cout << setw(20) << "Galutinis (Med.)" << endl;
     }
     cout << "----------------------------------------------------------" << endl;
-    double galutinisBalas;
+
+    for (const auto& studentas : studentai) {
+        double galutinisBalas;
         if (pasirinkimas == 'v') {
             galutinisBalas = skaiciuotiGalutiniVidurki(studentas.namuDarbai, studentas.egzaminas);
         } else if (pasirinkimas == 'm') {
             galutinisBalas = skaiciuotiGalutiniMediana(studentas.namuDarbai, studentas.egzaminas);
         }
         cout << left << setw(15) << studentas.vardas 
-                     << setw(15) << studentas.pavarde 
-                     << setw(15) << fixed << setprecision(2) << galutinisBalas << endl;
+            << setw(15) << studentas.pavarde 
+            << setw(15) << fixed << setprecision(2) << galutinisBalas << endl;
     }
 
     return 0;
