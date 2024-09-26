@@ -103,6 +103,7 @@ int main() {
             Studentas studentas;
 
             cout << "Įveskite " << i + 1 << "-ojo studento vardą: ";
+            cin.ignore();
             getline(cin, studentas.vardas);
 
             cout << "Įveskite " << i + 1 << "-ojo studento pavardę: ";
@@ -130,31 +131,19 @@ int main() {
         return 1;
     }
 
-    char galutinioBaloPasirinkimas;
-    cout << "Pasirinkite galutinio balo skaičiavimo būdą (v - vidurkis, m - mediana): ";
-    cin >> galutinioBaloPasirinkimas;
-    cin.ignore();
-
     cout << endl;
     cout << left << setw(15) << "Vardas" << setw(15) << "Pavarde";
-    if (galutinioBaloPasirinkimas == 'v') {
-        cout << setw(20) << "Galutinis (Vid.)" << endl;
-    } else if (galutinioBaloPasirinkimas == 'm') {
-        cout << setw(20) << "Galutinis (Med.)" << endl;
-    }
-    cout << "--------------------------------------------------------------" << endl;
+    cout << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
+    cout << "---------------------------------------------------------------------" << endl;
 
     for (const auto& studentas : studentai) {
-        double galutinisBalas;
-        if (galutinioBaloPasirinkimas == 'v') {
-            galutinisBalas = skaiciuotiGalutiniVidurki(studentas.namuDarbai, studentas.egzaminas);
-        } else if (galutinioBaloPasirinkimas == 'm') {
-            galutinisBalas = skaiciuotiGalutiniMediana(studentas.namuDarbai, studentas.egzaminas);
-        }
+        double galutinisVidurkis = skaiciuotiGalutiniVidurki(studentas.namuDarbai, studentas.egzaminas);
+        double galutinisMediana = skaiciuotiGalutiniMediana(studentas.namuDarbai, studentas.egzaminas);
 
         cout << left << setw(15) << studentas.vardas
              << setw(15) << studentas.pavarde
-             << setw(20) << fixed << setprecision(2) << galutinisBalas << endl;
+             << setw(20) << fixed << setprecision(2) << galutinisVidurkis
+             << setw(20) << fixed << setprecision(2) << galutinisMediana << endl;
     }
 
     return 0;
