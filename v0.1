@@ -131,6 +131,11 @@ int main() {
         return 1;
     }
 
+        // Surikiuojame studentus pagal pavardę
+    sort(studentai.begin(), studentai.end(), [](const Studentas& a, const Studentas& b) {
+        return a.pavarde < b.pavarde;  // Rikiuojame pagal pavardę abėcėlės tvarka
+    });
+
     cout << endl;
     cout << left << setw(15) << "Vardas" << setw(15) << "Pavarde";
     cout << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
