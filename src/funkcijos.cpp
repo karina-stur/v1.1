@@ -301,97 +301,72 @@ void strategija1(std::list<Studentas>& studentai, bool pagalVidurki, std::list<S
     }
 }
 
-void strategija2(std::vector<Studentas>& studentai, bool pagalVidurki, std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai) {
-
-    for (const Studentas& studentas : studentai) {
+void strategija2(std::vector<Studentas>& studentai, bool pagalVidurki,
+    std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai) {
+    for (size_t i = 0; i < studentai.size(); ) {
         double galutinisRezultatas;
 
         if (pagalVidurki) {
-            galutinisRezultatas = skaiciuotiGalutiniVidurki(studentas);
+            galutinisRezultatas = skaiciuotiGalutiniVidurki(studentai[i]);
         }
         else {
-            galutinisRezultatas = skaiciuotiGalutiniMediana(studentas);
+            galutinisRezultatas = skaiciuotiGalutiniMediana(studentai[i]);
         }
 
         if (galutinisRezultatas < 5.0) {
-            vargsiukai.push_back(studentas);
+            vargsiukai.push_back(studentai[i]);
+            studentai.erase(studentai.begin() + i);
         }
         else {
-            kietekai.push_back(studentas);
+            kietekai.push_back(studentai[i]); 
+            ++i; 
         }
     }
-    studentai = kietekai;
 }
+
 
 void strategija2(std::list<Studentas>& studentai, bool pagalVidurki, std::list<Studentas>& vargsiukai, std::list<Studentas>& kietekai) {
-
-    for (const Studentas& studentas : studentai) {
+    for (auto it = studentai.begin(); it != studentai.end(); ) {
         double galutinisRezultatas;
 
         if (pagalVidurki) {
-            galutinisRezultatas = skaiciuotiGalutiniVidurki(studentas);
+            galutinisRezultatas = skaiciuotiGalutiniVidurki(*it);
         }
         else {
-            galutinisRezultatas = skaiciuotiGalutiniMediana(studentas);
+            galutinisRezultatas = skaiciuotiGalutiniMediana(*it);
         }
-
-        if (galutinisRezultatas < 5.0) {
-            vargsiukai.push_back(studentas);
-        }
-        else {
-            kietekai.push_back(studentas);
-        }
-    }
-    studentai = kietekai;
-}
-
-void strategija3(std::vector<Studentas>& studentai, bool pagalVidurki,
-    std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai) {
-    auto calculateFinalGrade = [&](const Studentas& studentas) {
-        if (pagalVidurki) {
-            return skaiciuotiGalutiniVidurki(studentas);
-        }
-        else {
-            return skaiciuotiGalutiniMediana(studentas);
-        }
-        };
-
-    auto it = std::partition(studentai.begin(), studentai.end(),
-        [&](const Studentas& studentas) {
-            return calculateFinalGrade(studentas) >= 5.0;
-        });
-
-    kietekai.insert(kietekai.end(), std::make_move_iterator(studentai.begin()),
-        std::make_move_iterator(it));
-
-    vargsiukai.insert(vargsiukai.end(), std::make_move_iterator(it),
-        std::make_move_iterator(studentai.end()));
-
-    studentai.erase(it, studentai.end());
-}
-
-void strategija3(std::list<Studentas>& studentai, bool pagalVidurki,
-    std::list<Studentas>& vargsiukai, std::list<Studentas>& kietekai) {
-    auto calculateFinalGrade = [&](const Studentas& studentas) {
-        if (pagalVidurki) {
-            return skaiciuotiGalutiniVidurki(studentas);
-        }
-        else {
-            return skaiciuotiGalutiniMediana(studentas);
-        }
-        };
-
-    auto it = studentai.begin();
-    while (it != studentai.end()) {
-        double galutinisRezultatas = calculateFinalGrade(*it);
 
         if (galutinisRezultatas < 5.0) {
             vargsiukai.splice(vargsiukai.end(), studentai, it++);
         }
         else {
-            kietekai.splice(kietekai.end(), studentai, it++);
+            ++it;
         }
     }
+}
+
+void strategija3(std::vector<Studentas>& studentai, bool pagalVidurki, std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai) {
+    auto isVargsiukas = [&](const Studentas& studentas) {
+        double galutinisRezultatas = pagalVidurki
+            ? skaiciuotiGalutiniVidurki(studentas)
+            : skaiciuotiGalutiniMediana(studentas);
+        return galutinisRezultatas < 5.0;
+        };
+
+    auto it = std::remove_if(studentai.begin(), studentai.end(), isVargsiukas);
+
+    studentai.erase(it, studentai.end());
+}
+
+void strategija3(std::list<Studentas>& studentai, bool pagalVidurki, std::list<Studentas>& vargsiukai, std::list<Studentas>& kietekai) {
+    auto isVargsiukas = [&](const Studentas& studentas) {
+        double galutinisRezultatas = pagalVidurki
+            ? skaiciuotiGalutiniVidurki(studentas)
+            : skaiciuotiGalutiniMediana(studentas);
+        return galutinisRezultatas < 5.0;
+        };
+
+    studentai.remove_if(isVargsiukas);
 }
 
 void testKonteinerius(const std::vector<Studentas>& studentaiVektorius, bool pagalVidurki,
@@ -403,42 +378,46 @@ void testKonteinerius(const std::vector<Studentas>& studentaiVektorius, bool pag
     std::vector<Studentas> kietekai;
 
     auto start = std::chrono::high_resolution_clock::now();
-    strategija(vectorCopy, pagalVidurki, vargsiukai, kietekai);
+    strategija(vectorCopy, pagalVidurki, vargsiukai, kietekai); 
     auto end = std::chrono::high_resolution_clock::now();
     totalPartitionTimeVec = std::chrono::duration<double>(end - start).count();
 
+    double saveNuskriaustukaiTime = 0.0;
+    double saveKietiakaiTime = 0.0;
+
     if (pagalVidurki) {
         start = std::chrono::high_resolution_clock::now();
-        isaugotiStudentuGrupe(vargsiukai, "nuskriaustukai_vec_vid.txt", pagalVidurki);
+        isaugotiStudentuGrupe(vargsiukai, "nuskriaustukai_list_vid.txt", pagalVidurki);
         end = std::chrono::high_resolution_clock::now();
-        totalNuskriaustukaiSaveTimeVec += std::chrono::duration<double>(end - start).count();
+        saveNuskriaustukaiTime = std::chrono::duration<double>(end - start).count();
 
         start = std::chrono::high_resolution_clock::now();
-        isaugotiStudentuGrupe(kietekai, "kietekai_vec_vid.txt", pagalVidurki);
+        isaugotiStudentuGrupe(kietekai, "kietekai_list_vid.txt", pagalVidurki);
         end = std::chrono::high_resolution_clock::now();
-        totalKietiakaiSaveTimeVec += std::chrono::duration<double>(end - start).count();
-    }
+        saveKietiakaiTime = std::chrono::duration<double>(end - start).count();
+    } 
     else {
         start = std::chrono::high_resolution_clock::now();
-        isaugotiStudentuGrupe(vargsiukai, "nuskriaustukai_vec_med.txt", pagalVidurki);
+        isaugotiStudentuGrupe(vargsiukai, "nuskriaustukai_list_med.txt", pagalVidurki);
         end = std::chrono::high_resolution_clock::now();
-        totalNuskriaustukaiSaveTimeVec += std::chrono::duration<double>(end - start).count();
+        saveNuskriaustukaiTime = std::chrono::duration<double>(end - start).count();
 
         start = std::chrono::high_resolution_clock::now();
-        isaugotiStudentuGrupe(kietekai, "kietekai_vec_med.txt", pagalVidurki);
+        isaugotiStudentuGrupe(kietekai, "kietekai_list_med.txt", pagalVidurki);
         end = std::chrono::high_resolution_clock::now();
-        totalKietiakaiSaveTimeVec += std::chrono::duration<double>(end - start).count();
+        saveKietiakaiTime = std::chrono::duration<double>(end - start).count();
     }
 
-    double totalTimeVec = totalPartitionTimeVec + totalNuskriaustukaiSaveTimeVec + totalKietiakaiSaveTimeVec;
+    double totalTimeList = totalPartitionTimeVec + saveNuskriaustukaiTime + saveKietiakaiTime;
 
-    std::cout << "Testuojama su std::vector<Studentas>...\n";
+    std::cout << "Testuojama su std::list<Studentas>...\n";
     std::cout << std::fixed << std::setprecision(6);
     std::cout << "grupavimas uztruko: " << totalPartitionTimeVec << " sekundziu.\n";
-    std::cout << "nuskriaustukai isaugoti per: " << totalNuskriaustukaiSaveTimeVec << " sekundziu.\n";
-    std::cout << "kietiakai isaugoti per: " << totalKietiakaiSaveTimeVec << " sekundziu.\n";
-    std::cout << "bendrai uztruko: " << totalTimeVec << " sekundziu.\n";
+    std::cout << "nuskriaustukai isaugoti per: " << saveNuskriaustukaiTime << " sekundziu.\n";
+    std::cout << "kietiakai isaugoti per: " << saveKietiakaiTime << " sekundziu.\n";
+    std::cout << "bendrai uztruko: " << totalTimeList << " sekundziu.\n";
 }
+
 
 void testKonteinerius(const std::list<Studentas>& studentaiLista, bool pagalVidurki,
     double& totalPartitionTimeList, double& totalNuskriaustukaiSaveTimeList, double& totalKietiakaiSaveTimeList,
@@ -449,39 +428,42 @@ void testKonteinerius(const std::list<Studentas>& studentaiLista, bool pagalVidu
     std::list<Studentas> kietekai;
 
     auto start = std::chrono::high_resolution_clock::now();
-    strategija(listCopy, pagalVidurki, vargsiukai, kietekai); 
+    strategija(listCopy, pagalVidurki, vargsiukai, kietekai);
     auto end = std::chrono::high_resolution_clock::now();
     totalPartitionTimeList = std::chrono::duration<double>(end - start).count();
+
+    double saveNuskriaustukaiTime = 0.0;
+    double saveKietiakaiTime = 0.0;
 
     if (pagalVidurki) {
         start = std::chrono::high_resolution_clock::now();
         isaugotiStudentuGrupe(vargsiukai, "nuskriaustukai_list_vid.txt", pagalVidurki);
         end = std::chrono::high_resolution_clock::now();
-        totalNuskriaustukaiSaveTimeList += std::chrono::duration<double>(end - start).count();
+        saveNuskriaustukaiTime = std::chrono::duration<double>(end - start).count();
 
         start = std::chrono::high_resolution_clock::now();
         isaugotiStudentuGrupe(kietekai, "kietekai_list_vid.txt", pagalVidurki);
         end = std::chrono::high_resolution_clock::now();
-        totalKietiakaiSaveTimeList += std::chrono::duration<double>(end - start).count();
+        saveKietiakaiTime = std::chrono::duration<double>(end - start).count();
     }
     else {
         start = std::chrono::high_resolution_clock::now();
         isaugotiStudentuGrupe(vargsiukai, "nuskriaustukai_list_med.txt", pagalVidurki);
         end = std::chrono::high_resolution_clock::now();
-        totalNuskriaustukaiSaveTimeList += std::chrono::duration<double>(end - start).count();
+        saveNuskriaustukaiTime = std::chrono::duration<double>(end - start).count();
 
         start = std::chrono::high_resolution_clock::now();
         isaugotiStudentuGrupe(kietekai, "kietekai_list_med.txt", pagalVidurki);
         end = std::chrono::high_resolution_clock::now();
-        totalKietiakaiSaveTimeList += std::chrono::duration<double>(end - start).count();
+        saveKietiakaiTime = std::chrono::duration<double>(end - start).count();
     }
 
-    double totalTimeList = totalPartitionTimeList + totalNuskriaustukaiSaveTimeList + totalKietiakaiSaveTimeList;
+    double totalTimeList = totalPartitionTimeList + saveNuskriaustukaiTime + saveKietiakaiTime;
 
     std::cout << "Testuojama su std::list<Studentas>...\n";
     std::cout << std::fixed << std::setprecision(6);
     std::cout << "grupavimas uztruko: " << totalPartitionTimeList << " sekundziu.\n";
-    std::cout << "nuskriaustukai isaugoti per: " << totalNuskriaustukaiSaveTimeList << " sekundziu.\n";
-    std::cout << "kietiakai isaugoti per: " << totalKietiakaiSaveTimeList << " sekundziu.\n";
+    std::cout << "nuskriaustukai isaugoti per: " << saveNuskriaustukaiTime << " sekundziu.\n";
+    std::cout << "kietiakai isaugoti per: " << saveKietiakaiTime << " sekundziu.\n";
     std::cout << "bendrai uztruko: " << totalTimeList << " sekundziu.\n";
 }
