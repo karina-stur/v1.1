@@ -19,7 +19,7 @@ int main() {
     std::cout << "Pasirinkite duomenu ivedimo buda:\n";
     std::cout << "1 - Ivesti duomenis ranka\n";
     std::cout << "2 - Nuskaityti duomenis is failo\n";
-    int pasirinkimas = readInteger(); 
+    int pasirinkimas = readInteger();
 
     std::cout << "Pasirinkite konteinerio tipa:\n";
     std::cout << "1 - Vector\n";
@@ -29,6 +29,7 @@ int main() {
     std::cout << "Pasirinkite strategija:\n";
     std::cout << "1 - Naudoti du konteinerius (vargsiukai ir kietekai)\n";
     std::cout << "2 - Naudoti viena konteineri (vargsiukai, o kietekai lieka pradiniame konteineryje)\n";
+    std::cout << "3 - Naudoti patobulinta strategija nr.2\n";
     int strategija = readInteger();
 
     if (containerChoice == 1) {
@@ -43,7 +44,7 @@ int main() {
             std::cin >> failoPavadinimas;
 
             auto startReadingVec = std::chrono::high_resolution_clock::now();
-            nuskaitytiStudentus(failoPavadinimas, studentaiVektorius); 
+            nuskaitytiStudentus(failoPavadinimas, studentaiVektorius);
             auto endReadingVec = std::chrono::high_resolution_clock::now();
             double readingTimeVec = std::chrono::duration<double>(endReadingVec - startReadingVec).count();
             std::cout << "Failo nuskaitymo laikas i Vector: " << readingTimeVec << " sekundes" << std::endl;
@@ -64,6 +65,11 @@ int main() {
             testKonteinerius(studentaiVektorius, pagalVidurki, totalPartitionTimeVec,
                 totalNuskriaustukaiSaveTimeVec, totalKietiakaiSaveTimeVec, strategija2);
         }
+        else if (strategija == 3) {
+            double totalPartitionTimeVec, totalNuskriaustukaiSaveTimeVec, totalKietiakaiSaveTimeVec;
+            testKonteinerius(studentaiVektorius, pagalVidurki, totalPartitionTimeVec,
+                totalNuskriaustukaiSaveTimeVec, totalKietiakaiSaveTimeVec, strategija3);
+        }
     }
     else if (containerChoice == 2) {
         std::list<Studentas> studentaiSarasas;
@@ -77,7 +83,7 @@ int main() {
             std::cin >> failoPavadinimas;
 
             auto startReadingList = std::chrono::high_resolution_clock::now();
-            nuskaitytiStudentus(failoPavadinimas, studentaiSarasas); 
+            nuskaitytiStudentus(failoPavadinimas, studentaiSarasas);
             auto endReadingList = std::chrono::high_resolution_clock::now();
             double readingTimeList = std::chrono::duration<double>(endReadingList - startReadingList).count();
             std::cout << "Failo nuskaitymo laikas i List: " << readingTimeList << " sekundes" << std::endl;
@@ -89,10 +95,19 @@ int main() {
         bool pagalVidurki = (kriterijus == 1);
 
         if (strategija == 1) {
-            strategija1(studentaiSarasas, pagalVidurki);
+            double totalPartitionTimeList, totalNuskriaustukaiSaveTimeList, totalKietiakaiSaveTimeList;
+            testKonteinerius(studentaiSarasas, pagalVidurki, totalPartitionTimeList,
+                totalNuskriaustukaiSaveTimeList, totalKietiakaiSaveTimeList, strategija1);
         }
         else if (strategija == 2) {
-            strategija2(studentaiSarasas, pagalVidurki);
+            double totalPartitionTimeList, totalNuskriaustukaiSaveTimeList, totalKietiakaiSaveTimeList;
+            testKonteinerius(studentaiSarasas, pagalVidurki, totalPartitionTimeList,
+                totalNuskriaustukaiSaveTimeList, totalKietiakaiSaveTimeList, strategija2);
+        }
+        else if (strategija == 3) {
+            double totalPartitionTimeList, totalNuskriaustukaiSaveTimeList, totalKietiakaiSaveTimeList;
+            testKonteinerius(studentaiSarasas, pagalVidurki, totalPartitionTimeList,
+                totalNuskriaustukaiSaveTimeList, totalKietiakaiSaveTimeList, strategija3);
         }
     }
     else {
@@ -101,4 +116,3 @@ int main() {
 
     return 0;
 }
-
