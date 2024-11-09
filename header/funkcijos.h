@@ -39,7 +39,7 @@ void isaugotiStudentuGrupe(const std::list<Studentas>& studentai, const std::str
 void ivestiStudentuDuomenis(std::vector<Studentas>& studentaiVektorius);
 void ivestiStudentuDuomenis(std::list<Studentas>& studentaiSarasas);
 
-void testKonteinerius(std::vector<Studentas>& studentaiVektorius, bool pagalVidurki,
+void testKonteinerius(const std::vector<Studentas>& studentaiVektorius, bool pagalVidurki,
     double& totalPartitionTimeVec, double& totalNuskriaustukaiSaveTimeVec, double& totalKietiakaiSaveTimeVec,
     void (*strategija)(std::vector<Studentas>&, bool, std::vector<Studentas>&, std::vector<Studentas>&));
 
