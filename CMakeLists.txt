@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
 project(v1.0)
 include_directories(header)
-file(GLOB SOURCES "src/*.cpp")
+set(SOURCES src/main.cpp src/funkcijos.cpp) 
 add_executable(v1.0 ${SOURCES})
