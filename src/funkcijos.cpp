@@ -324,16 +324,16 @@ void strategija2(std::list<Studentas>& studentai, bool pagalVidurki, std::list<S
 }
 
 void strategija3(std::vector<Studentas>& studentai, bool pagalVidurki, std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai) {
-    vargsiukai.clear(); 
-    kietekai.clear(); 
+    vargsiukai.clear();
+    kietekai.clear();
 
-    auto partitionIt = std::partition(studentai.begin(), studentai.end(), [&](const Studentas& student) {
-        double finalScore = pagalVidurki ? skaiciuotiGalutiniVidurki(student) : skaiciuotiGalutiniMediana(student);
-        return finalScore >= 5.0; 
+    auto partitionIt = std::partition(studentai.begin(), studentai.end(), [&](Studentas& student) {
+        double finalScore = pagalVidurki ? student.skaiciuotiGalutiniVidurki() : student.skaiciuotiGalutiniMediana();
+        return finalScore >= 5.0;
         });
 
     for (auto it = partitionIt; it != studentai.end(); ++it) {
-        vargsiukai.push_back(std::move(*it)); 
+        vargsiukai.push_back(std::move(*it));
     }
 
     studentai.resize(std::distance(studentai.begin(), partitionIt));
@@ -343,13 +343,11 @@ void strategija3(std::list<Studentas>& studentai, bool pagalVidurki, std::list<S
     vargsiukai.clear();
     kietekai.clear();
 
-    std::list<Studentas> studentScoresAboveFive;
-
     for (auto it = studentai.begin(); it != studentai.end();) {
-        double score = pagalVidurki ? skaiciuotiGalutiniVidurki(*it) : skaiciuotiGalutiniMediana(*it);
+        double score = pagalVidurki ? it->skaiciuotiGalutiniVidurki() : it->skaiciuotiGalutiniMediana();
 
         if (score < 5.0) {
-            vargsiukai.push_back(*it);
+            vargsiukai.push_back(std::move(*it));
             it = studentai.erase(it);
         }
         else {
