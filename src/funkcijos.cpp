@@ -160,12 +160,23 @@ void nuskaitytiStudentus(const std::string& failoPavadinimas, std::vector<Studen
     std::getline(failas, header);
 
     while (failas) {
-        Studentas studentas;
-        failas >> studentas.vardas >> studentas.pavarde;
-        studentas.namuDarbai.resize(15);
-        for (int& nd : studentas.namuDarbai) failas >> nd;
-        failas >> studentas.egzaminas;
-        studentai.push_back(studentas);
+        std::string vardas, pavarde;
+        std::vector<int> namuDarbai(15);
+        int egzaminas;
+
+        failas >> vardas >> pavarde;
+
+        for (int i = 0; i < 15; ++i) {
+            failas >> namuDarbai[i];
+        }
+
+        failas >> egzaminas;
+
+        if (failas) {
+            Studentas studentas(vardas, pavarde, namuDarbai, egzaminas);
+
+            studentai.push_back(studentas);
+        }
     }
 }
 
@@ -180,12 +191,22 @@ void nuskaitytiStudentus(const std::string& failoPavadinimas, std::list<Studenta
     std::getline(failas, header);
 
     while (failas) {
-        Studentas studentas;
-        failas >> studentas.vardas >> studentas.pavarde;
-        studentas.namuDarbai.resize(15);
-        for (int& nd : studentas.namuDarbai) failas >> nd;
-        failas >> studentas.egzaminas;
-        studentai.push_back(studentas);
+        std::string vardas, pavarde;
+        std::vector<int> namuDarbai(15);
+        int egzaminas;
+
+        failas >> vardas >> pavarde;
+
+        for (int i = 0; i < 15; ++i) {
+            failas >> namuDarbai[i];
+        }
+
+        failas >> egzaminas;
+
+        if (failas) {
+            Studentas studentas(vardas, pavarde, namuDarbai, egzaminas);
+            studentai.push_back(studentas);
+        }
     }
 }
 
