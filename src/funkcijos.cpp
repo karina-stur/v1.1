@@ -108,19 +108,26 @@ void ivestiStudentuDuomenis(std::vector<Studentas>& studentaiVektorius) {
 
     for (int i = 0; i < kiekMokiniu; ++i) {
         Studentas studentas;
+
         std::cout << "Iveskite " << i + 1 << "-ojo studento varda: ";
-        std::getline(std::cin, studentas.vardas);
+        std::string vardas;
+        std::getline(std::cin, vardas);
+        studentas.setVardas(vardas);
+
         std::cout << "Iveskite " << i + 1 << "-ojo studento pavarde: ";
-        std::getline(std::cin, studentas.pavarde);
+        std::string pavarde;
+        std::getline(std::cin, pavarde);
+        studentas.setPavarde(pavarde);
 
         int ndKiekis;
         std::cout << "Kiek namu darbu pazymiu norite sugeneruoti? ";
         ndKiekis = readInteger();
 
         generuotiPazymius(studentas, ndKiekis);
+
         studentaiVektorius.push_back(studentas);
 
-        std::cout << "Studentas " << studentas.vardas << " " << studentas.pavarde
+        std::cout << "Studentas " << studentas.getVardas() << " " << studentas.getPavarde()
             << " atminties adresas: " << &studentas << std::endl;
     }
 }
@@ -132,19 +139,26 @@ void ivestiStudentuDuomenis(std::list<Studentas>& studentaiSarasas) {
 
     for (int i = 0; i < kiekMokiniu; ++i) {
         Studentas studentas;
+
         std::cout << "Iveskite " << i + 1 << "-ojo studento varda: ";
-        std::getline(std::cin, studentas.vardas);
+        std::string vardas;
+        std::getline(std::cin, vardas);
+        studentas.setVardas(vardas);
+
         std::cout << "Iveskite " << i + 1 << "-ojo studento pavarde: ";
-        std::getline(std::cin, studentas.pavarde);
+        std::string pavarde;
+        std::getline(std::cin, pavarde);
+        studentas.setPavarde(pavarde);
 
         int ndKiekis;
         std::cout << "Kiek namu darbu pazymiu norite sugeneruoti? ";
         ndKiekis = readInteger();
 
         generuotiPazymius(studentas, ndKiekis);
+
         studentaiSarasas.push_back(studentas);
 
-        std::cout << "Studentas " << studentas.vardas << " " << studentas.pavarde
+        std::cout << "Studentas " << studentas.getVardas() << " " << studentas.getPavarde()
             << " atminties adresas: " << &studentas << std::endl;
     }
 }
