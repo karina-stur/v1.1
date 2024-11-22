@@ -7,7 +7,7 @@
 #include <iostream>
 
 class Studentas {
-public:
+private:
     std::string vardas;
     std::string pavarde;
     std::vector<int> namuDarbai;
