@@ -59,11 +59,46 @@ int generuotiAtsitiktiniPazymi(int min = 1, int max = 10) {
 }
 
 void generuotiPazymius(Studentas& studentas, int namuDarbuKiekis) {
-    studentas.namuDarbai.clear();
+    studentas.setNamuDarbai({});
+
     for (int i = 0; i < namuDarbuKiekis; ++i) {
-        studentas.namuDarbai.push_back(generuotiAtsitiktiniPazymi());
+        studentas.addNamuDarbai(generuotiAtsitiktiniPazymi());
     }
-    studentas.egzaminas = generuotiAtsitiktiniPazymi();
+    studentas.setEgzaminas(generuotiAtsitiktiniPazymi());
+}
+
+double skaiciuotiGalutiniVidurki(const std::vector<int>& namuDarbai, int egzaminas) {
+    double total = std::accumulate(namuDarbai.begin(), namuDarbai.end(), 0);
+    return (total + egzaminas) / (namuDarbai.size() + 1);
+}
+
+double skaiciuotiGalutiniMediana(const std::vector<int>& namuDarbai) {
+    std::vector<int> sortedNamuDarbai = namuDarbai;
+    std::sort(sortedNamuDarbai.begin(), sortedNamuDarbai.end());
+
+    if (sortedNamuDarbai.size() % 2 == 0) {
+        return (sortedNamuDarbai[sortedNamuDarbai.size() / 2 - 1] + sortedNamuDarbai[sortedNamuDarbai.size() / 2]) / 2.0;
+    }
+    else {
+        return sortedNamuDarbai[sortedNamuDarbai.size() / 2];
+    }
+}
+
+double skaiciuotiGalutiniVidurki(const std::list<int>& namuDarbai, int egzaminas) {
+    double total = std::accumulate(namuDarbai.begin(), namuDarbai.end(), 0);
+    return (total + egzaminas) / (namuDarbai.size() + 1);
+}
+
+double skaiciuotiGalutiniMediana(const std::list<int>& namuDarbai) {
+    std::vector<int> sortedNamuDarbai(namuDarbai.begin(), namuDarbai.end());
+    std::sort(sortedNamuDarbai.begin(), sortedNamuDarbai.end());
+
+    if (sortedNamuDarbai.size() % 2 == 0) {
+        return (sortedNamuDarbai[sortedNamuDarbai.size() / 2 - 1] + sortedNamuDarbai[sortedNamuDarbai.size() / 2]) / 2.0;
+    }
+    else {
+        return sortedNamuDarbai[sortedNamuDarbai.size() / 2];
+    }
 }
 
 void ivestiStudentuDuomenis(std::vector<Studentas>& studentaiVektorius) {
@@ -151,21 +186,6 @@ void nuskaitytiStudentus(const std::string& failoPavadinimas, std::list<Studenta
         for (int& nd : studentas.namuDarbai) failas >> nd;
         failas >> studentas.egzaminas;
         studentai.push_back(studentas);
-    }
-}
-
-double skaiciuotiGalutiniVidurki(const Studentas& studentas) {
-    double total = std::accumulate(studentas.namuDarbai.begin(), studentas.namuDarbai.end(), 0);
-    return (total + studentas.egzaminas) / (studentas.namuDarbai.size() + 1);
-}
-
-double skaiciuotiGalutiniMediana(Studentas studentas) {
-    std::sort(studentas.namuDarbai.begin(), studentas.namuDarbai.end());
-    if (studentas.namuDarbai.size() % 2 == 0) {
-        return (studentas.namuDarbai[studentas.namuDarbai.size() / 2 - 1] + studentas.namuDarbai[studentas.namuDarbai.size() / 2]) / 2.0;
-    }
-    else {
-        return studentas.namuDarbai[studentas.namuDarbai.size() / 2];
     }
 }
 
