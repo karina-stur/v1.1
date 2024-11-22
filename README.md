@@ -30,8 +30,10 @@ Tai yra patobulinta programa, kuri sukurta pagal praeitą versiją (version 1.0)
 | `-O2`               | 0m9.721s               | 247KB       |
 | `-O3`               | 0m9.360s               | 267KB       |
 
+###"Struct" -O2 veikimo laikas:
 !["Struct" -O2 veikimo laikas](pav/struct_O2.png)
 
+###"Class" -O2 veikimo laikas:
 !["Class" -O2 veikimo laikas](pav/class_O2.png)
 
 ### Išvados:
