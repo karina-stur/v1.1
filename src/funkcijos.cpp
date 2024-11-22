@@ -190,6 +190,11 @@ void nuskaitytiStudentus(const std::string& failoPavadinimas, std::list<Studenta
 }
 
 void isaugotiStudentuGrupe(const std::vector<Studentas>& studentai, const std::string& failoPavadinimas) {
+    if (studentai.empty()) {
+        std::cerr << "Studentu sarasas tuscias, nera ka irasyti!" << std::endl;
+        return;
+    }
+
     std::ofstream failas(failoPavadinimas);
     if (!failas.is_open()) {
         std::cerr << "Nepavyko sukurti failo: " << failoPavadinimas << std::endl;
@@ -202,19 +207,23 @@ void isaugotiStudentuGrupe(const std::vector<Studentas>& studentai, const std::s
         << "Galutinis (Med.)" << std::endl;
     failas << std::string(80, '-') << std::endl;
 
-    std::stringstream buffer;
     for (const Studentas& studentas : studentai) {
-        double galutinisVidurkis = skaiciuotiGalutiniVidurki(studentas);
-        double galutinisMediana = skaiciuotiGalutiniMediana(studentas);
-        buffer << std::left << std::setw(20) << studentas.vardas
-            << std::setw(20) << studentas.pavarde
-            << std::setw(20) << galutinisVidurkis
-            << galutinisMediana << std::endl;
+        double galutinisVidurkis = skaiciuotiGalutiniVidurki(studentas.getNamuDarbai(), studentas.getEgzaminas());
+        double galutinisMediana = skaiciuotiGalutiniMediana(studentas.getNamuDarbai());
+
+        failas << std::left << std::setw(20) << studentas.getVardas()
+            << std::setw(20) << studentas.getPavarde()
+            << std::setw(20) << std::fixed << std::setprecision(2) << galutinisVidurkis
+            << std::fixed << std::setprecision(2) << galutinisMediana << std::endl;
     }
-    failas << buffer.str();
 }
 
 void isaugotiStudentuGrupe(const std::list<Studentas>& studentai, const std::string& failoPavadinimas) {
+    if (studentai.empty()) {
+        std::cerr << "Studentu sarasas tuscias, nera ka irasyti!" << std::endl;
+        return;
+    }
+
     std::ofstream failas(failoPavadinimas);
     if (!failas.is_open()) {
         std::cerr << "Nepavyko sukurti failo: " << failoPavadinimas << std::endl;
@@ -227,16 +236,15 @@ void isaugotiStudentuGrupe(const std::list<Studentas>& studentai, const std::str
         << "Galutinis (Med.)" << std::endl;
     failas << std::string(80, '-') << std::endl;
 
-    std::stringstream buffer;
     for (const Studentas& studentas : studentai) {
-        double galutinisVidurkis = skaiciuotiGalutiniVidurki(studentas);
-        double galutinisMediana = skaiciuotiGalutiniMediana(studentas);
-        buffer << std::left << std::setw(20) << studentas.vardas
-            << std::setw(20) << studentas.pavarde
-            << std::setw(20) << galutinisVidurkis
-            << galutinisMediana << std::endl;
+        double galutinisVidurkis = skaiciuotiGalutiniVidurki(studentas.getNamuDarbai(), studentas.getEgzaminas());
+        double galutinisMediana = skaiciuotiGalutiniMediana(studentas.getNamuDarbai());
+
+        failas << std::left << std::setw(20) << studentas.getVardas()
+            << std::setw(20) << studentas.getPavarde()
+            << std::setw(20) << std::fixed << std::setprecision(2) << galutinisVidurkis
+            << std::fixed << std::setprecision(2) << galutinisMediana << std::endl;
     }
-    failas << buffer.str();
 }
 
 void strategija1(std::vector<Studentas>& studentai, bool pagalVidurki,
