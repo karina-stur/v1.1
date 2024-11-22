@@ -289,8 +289,11 @@ void strategija2(std::vector<Studentas>& studentai, bool pagalVidurki, std::vect
 
     size_t writeIndex = 0;
 
+    vargsiukai.reserve(studentai.size());
+    kietekai.reserve(studentai.size());
+
     for (auto it = studentai.begin(); it != studentai.end(); ++it) {
-        double finalScore = pagalVidurki ? skaiciuotiGalutiniVidurki(*it) : skaiciuotiGalutiniMediana(*it);
+        double finalScore = pagalVidurki ? it->skaiciuotiGalutiniVidurki() : it->skaiciuotiGalutiniMediana();
 
         if (finalScore < 5.0) {
             vargsiukai.push_back(std::move(*it));
@@ -302,7 +305,7 @@ void strategija2(std::vector<Studentas>& studentai, bool pagalVidurki, std::vect
             ++writeIndex;
         }
     }
-    studentai.resize(writeIndex); 
+    studentai.resize(writeIndex);
 }
 
 void strategija2(std::list<Studentas>& studentai, bool pagalVidurki, std::list<Studentas>& vargsiukai, std::list<Studentas>& kietekai) {
@@ -311,13 +314,14 @@ void strategija2(std::list<Studentas>& studentai, bool pagalVidurki, std::list<S
 
     auto it = studentai.begin();
     while (it != studentai.end()) {
-        double finalScore = pagalVidurki ? skaiciuotiGalutiniVidurki(*it) : skaiciuotiGalutiniMediana(*it);
+        double finalScore = pagalVidurki ? it->skaiciuotiGalutiniVidurki() : it->skaiciuotiGalutiniMediana();
 
         if (finalScore < 5.0) {
-            vargsiukai.push_back(std::move(*it)); 
-            it = studentai.erase(it);
+            vargsiukai.push_back(std::move(*it));
+            it = studentai.erase(it); 
         }
         else {
+            kietekai.push_back(std::move(*it));
             ++it;
         }
     }
