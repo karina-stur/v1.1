@@ -365,8 +365,8 @@ void testKonteinerius(const std::vector<Studentas>& studentaiVector, bool pagalV
     std::cout << "Testuojama su std::vector<Studentas>...\n";
 
     std::vector<Studentas> vectorCopy = studentaiVector;
-    std::vector<Studentas> vargsiukai;                
-    std::vector<Studentas> kietekai;                  
+    std::vector<Studentas> vargsiukai;
+    std::vector<Studentas> kietekai;
 
     auto start = std::chrono::high_resolution_clock::now();
     strategija(vectorCopy, pagalVidurki, vargsiukai, kietekai);
@@ -380,15 +380,15 @@ void testKonteinerius(const std::vector<Studentas>& studentaiVector, bool pagalV
 
     if (!vargsiukai.empty()) {
         std::sort(vargsiukai.begin(), vargsiukai.end(), [&](const Studentas& a, const Studentas& b) {
-            double scoreA = pagalVidurki ? skaiciuotiGalutiniVidurki(a) : skaiciuotiGalutiniMediana(a);
-            double scoreB = pagalVidurki ? skaiciuotiGalutiniVidurki(b) : skaiciuotiGalutiniMediana(b);
+            double scoreA = pagalVidurki ? a.skaiciuotiGalutiniVidurki() : a.skaiciuotiGalutiniMediana();
+            double scoreB = pagalVidurki ? b.skaiciuotiGalutiniVidurki() : b.skaiciuotiGalutiniMediana();
             return scoreA > scoreB;
             });
     }
 
     std::sort(kietekaiToSave.begin(), kietekaiToSave.end(), [&](const Studentas& a, const Studentas& b) {
-        double scoreA = pagalVidurki ? skaiciuotiGalutiniVidurki(a) : skaiciuotiGalutiniMediana(a);
-        double scoreB = pagalVidurki ? skaiciuotiGalutiniVidurki(b) : skaiciuotiGalutiniMediana(b);
+        double scoreA = pagalVidurki ? a.skaiciuotiGalutiniVidurki() : a.skaiciuotiGalutiniMediana();
+        double scoreB = pagalVidurki ? b.skaiciuotiGalutiniVidurki() : b.skaiciuotiGalutiniMediana();
         return scoreA > scoreB;
         });
 
@@ -407,10 +407,10 @@ void testKonteinerius(const std::vector<Studentas>& studentaiVector, bool pagalV
     double totalTimeVec = totalPartitionTimeVec + saveNuskriaustukaiTime + saveKietekaiTime;
 
     std::cout << std::fixed << std::setprecision(6);
-    std::cout << "grupavimas uztruko: " << totalPartitionTimeVec << " sekundziu.\n";
-    std::cout << "nuskriaustukai isaugoti per: " << saveNuskriaustukaiTime << " sekundziu.\n";
-    std::cout << "kietekai isaugoti per: " << saveKietekaiTime << " sekundziu.\n";
-    std::cout << "bendrai uztruko: " << totalTimeVec << " sekundziu.\n";
+    std::cout << "Grupavimas uztruko: " << totalPartitionTimeVec << " sekundziu.\n";
+    std::cout << "Nuskriaustukai isaugoti per: " << saveNuskriaustukaiTime << " sekundziu.\n";
+    std::cout << "Kietekai isaugoti per: " << saveKietekaiTime << " sekundziu.\n";
+    std::cout << "Bendrai uztruko: " << totalTimeVec << " sekundziu.\n";
 }
 
 void testKonteinerius(const std::list<Studentas>& studentaiList, bool pagalVidurki,
@@ -419,9 +419,9 @@ void testKonteinerius(const std::list<Studentas>& studentaiList, bool pagalVidur
 
     std::cout << "Testuojama su std::list<Studentas>...\n";
 
-    std::list<Studentas> listCopy = studentaiList; 
-    std::list<Studentas> vargsiukai;          
-    std::list<Studentas> kietekai;               
+    std::list<Studentas> listCopy = studentaiList;
+    std::list<Studentas> vargsiukai;
+    std::list<Studentas> kietekai;
 
     auto start = std::chrono::high_resolution_clock::now();
     strategija(listCopy, pagalVidurki, vargsiukai, kietekai);
@@ -434,10 +434,18 @@ void testKonteinerius(const std::list<Studentas>& studentaiList, bool pagalVidur
     std::list<Studentas>& kietekaiToSave = kietekai.empty() ? listCopy : kietekai;
 
     kietekaiToSave.sort([&](const Studentas& a, const Studentas& b) {
-        double scoreA = pagalVidurki ? skaiciuotiGalutiniVidurki(a) : skaiciuotiGalutiniMediana(a);
-        double scoreB = pagalVidurki ? skaiciuotiGalutiniVidurki(b) : skaiciuotiGalutiniMediana(b);
+        double scoreA = pagalVidurki ? a.skaiciuotiGalutiniVidurki() : a.skaiciuotiGalutiniMediana();
+        double scoreB = pagalVidurki ? b.skaiciuotiGalutiniVidurki() : b.skaiciuotiGalutiniMediana();
         return scoreA > scoreB;
         });
+
+    if (!vargsiukai.empty()) {
+        vargsiukai.sort([&](const Studentas& a, const Studentas& b) {
+            double scoreA = pagalVidurki ? a.skaiciuotiGalutiniVidurki() : a.skaiciuotiGalutiniMediana();
+            double scoreB = pagalVidurki ? b.skaiciuotiGalutiniVidurki() : b.skaiciuotiGalutiniMediana();
+            return scoreA > scoreB;
+            });
+    }
 
     std::string nuskriaustukaiFile = pagalVidurki ? "nuskriaustukai_list_vid.txt" : "nuskriaustukai_list_med.txt";
     start = std::chrono::high_resolution_clock::now();
@@ -454,8 +462,9 @@ void testKonteinerius(const std::list<Studentas>& studentaiList, bool pagalVidur
     double totalTimeList = totalPartitionTimeList + saveNuskriaustukaiTime + saveKietiakaiTime;
 
     std::cout << std::fixed << std::setprecision(6);
-    std::cout << "grupavimas uztruko: " << totalPartitionTimeList << " sekundziu.\n";
-    std::cout << "nuskriaustukai isaugoti per: " << saveNuskriaustukaiTime << " sekundziu.\n";
-    std::cout << "kietekai isaugoti per: " << saveKietiakaiTime << " sekundziu.\n";
-    std::cout << "bendrai uztruko: " << totalTimeList << " sekundziu.\n";
+    std::cout << "Grupavimas uztruko: " << totalPartitionTimeList << " sekundziu.\n";
+    std::cout << "Nuskriaustukai isaugoti per: " << saveNuskriaustukaiTime << " sekundziu.\n";
+    std::cout << "Kietekai isaugoti per: " << saveKietiakaiTime << " sekundziu.\n";
+    std::cout << "Bendrai uztruko: " << totalTimeList << " sekundziu.\n";
 }
+
