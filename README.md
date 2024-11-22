@@ -1,4 +1,6 @@
 ## v1.1
+Tai yra patobulinta programa, kuri sukurta pagal praeitą versiją (version 1.0). Programoje duomenų tipas "Struct" yra pakeičiamas "Class" bei pakoreguotos funkcijos, kad jos veiktų su nauju duomenų tipu.
+
 ### Naudojimo instrukcija   
 - **CMake**: Būtina turėti įdiegtą CMake (rekomenduojama versija 3.25 ar vėlesnė);
 - **Kompiliatorius**: Tam, kad galėtumėte sukompiliuoti projektą, reikia turėti C++ kompiliatorių (pvz., GCC, MSVC).
@@ -10,7 +12,7 @@
 - **Klonuokite** šį projektą į savo vietinį kompiuterį;
 - **Paleidimas** su run.bat - atliks visus reikalingus veiksmus: sukompiliuos projektą ir paleis jį automatiškai.
 
-## Veikimo palyginimas su kompiliatoriaus optimizavimo vėliavėlėmis:
+## Programų veikimo palyginimas su kompiliatoriaus optimizavimo vėliavėlėmis:
 
 ### Rezultatai:
 
@@ -29,7 +31,7 @@
 | `-O3`               | 0m9.360s               | 267KB       |
 
 !["Struct" -O2 veikimo laikas](pav/struct_O2.png)
-!["Class" -O2 veikimo laikai](pav/class_O2.png)
+!["Class" -O2 veikimo laikas](pav/class_O2.png)
 
 ### Išvados:
 - **Veikimo laikas**: Kai optimizavimo lygis didėja, veikimo laikas sumažėja.
