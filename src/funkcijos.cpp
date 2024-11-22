@@ -1,4 +1,5 @@
 #include "funkcijos.h"
+#include "studentas.h"
 
 int readInteger() {
     int value;
