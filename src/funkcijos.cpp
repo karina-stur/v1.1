@@ -516,4 +516,3 @@ void testKonteinerius(const std::list<Studentas>& studentaiList, bool pagalVidur
     std::cout << "Kietekai isaugoti per: " << saveKietiakaiTime << " sekundziu.\n";
     std::cout << "Bendrai uztruko: " << totalTimeList << " sekundziu.\n";
 }
-
