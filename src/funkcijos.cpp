@@ -239,12 +239,13 @@ void isaugotiStudentuGrupe(const std::list<Studentas>& studentai, const std::str
     failas << buffer.str();
 }
 
-void strategija1(std::vector<Studentas>& studentai, bool pagalVidurki, std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai) {
+void strategija1(std::vector<Studentas>& studentai, bool pagalVidurki,
+    std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai) {
     std::vector<std::pair<Studentas, double>> studentScores;
     studentScores.reserve(studentai.size());
 
     for (const Studentas& studentas : studentai) {
-        double finalScore = pagalVidurki ? skaiciuotiGalutiniVidurki(studentas) : skaiciuotiGalutiniMediana(studentas);
+        double finalScore = pagalVidurki ? studentas.skaiciuotiGalutiniVidurki() : studentas.skaiciuotiGalutiniMediana();
         studentScores.emplace_back(studentas, finalScore);
     }
 
@@ -254,6 +255,7 @@ void strategija1(std::vector<Studentas>& studentai, bool pagalVidurki, std::vect
 
     vargsiukai.clear();
     kietekai.clear();
+
     for (const auto& studentScore : studentScores) {
         if (studentScore.second < 5.0) {
             vargsiukai.push_back(studentScore.first);
@@ -265,14 +267,16 @@ void strategija1(std::vector<Studentas>& studentai, bool pagalVidurki, std::vect
 }
 
 void strategija1(std::list<Studentas>& studentai, bool pagalVidurki, std::list<Studentas>& vargsiukai, std::list<Studentas>& kietekai) {
+    std::list<Studentas> listCopy = studentai;
+
     studentai.sort([pagalVidurki](const Studentas& a, const Studentas& b) {
-        double galutinisA = pagalVidurki ? skaiciuotiGalutiniVidurki(a) : skaiciuotiGalutiniMediana(a);
-        double galutinisB = pagalVidurki ? skaiciuotiGalutiniVidurki(b) : skaiciuotiGalutiniMediana(b);
+        double galutinisA = pagalVidurki ? a.skaiciuotiGalutiniVidurki() : a.skaiciuotiGalutiniMediana();
+        double galutinisB = pagalVidurki ? b.skaiciuotiGalutiniVidurki() : b.skaiciuotiGalutiniMediana();
         return galutinisA > galutinisB;
         });
 
     for (const Studentas& studentas : studentai) {
-        double galutinisRezultatas = pagalVidurki ? skaiciuotiGalutiniVidurki(studentas) : skaiciuotiGalutiniMediana(studentas);
+        double galutinisRezultatas = pagalVidurki ? studentas.skaiciuotiGalutiniVidurki() : studentas.skaiciuotiGalutiniMediana();
 
         if (galutinisRezultatas < 5.0) {
             vargsiukai.push_back(studentas);
