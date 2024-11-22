@@ -1,5 +1,6 @@
 ## v1.1
-Tai yra patobulinta programa, kuri sukurta pagal praeitą versiją (version 1.0). Programoje duomenų tipas "Struct" yra pakeičiamas "Class" bei pakoreguotos funkcijos, kad jos veiktų su nauju duomenų tipu.
+Tai yra patobulinta programa, kuri sukurta pagal praeitą versiją (version 1.0). v1.0 repozitorija buvo klonuota ir pagal ją sukurta šį versija.
+Programoje duomenų tipas "Struct" yra pakeičiamas "Class" bei pakoreguotos funkcijos, kad jos veiktų su nauju duomenų tipu.
 
 ### Naudojimo instrukcija   
 - **CMake**: Būtina turėti įdiegtą CMake (rekomenduojama versija 3.25 ar vėlesnė);
@@ -30,11 +31,11 @@ Tai yra patobulinta programa, kuri sukurta pagal praeitą versiją (version 1.0)
 | `-O2`               | 0m9.721s               | 247KB       |
 | `-O3`               | 0m9.360s               | 267KB       |
 
-###"Struct" -O2 veikimo laikas:
+### *"Struct" - O2 veikimo laikas*:
 
 !["Struct" -O2 veikimo laikas](pav/struct_O2.png)
 
-###"Class" -O2 veikimo laikas:
+### *"Class" - O2 veikimo laikas*:
 
 !["Class" -O2 veikimo laikas](pav/class_O2.png)
 
