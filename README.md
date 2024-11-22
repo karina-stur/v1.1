@@ -1,3 +1,42 @@
+## v1.1
+### Naudojimo instrukcija   
+- **CMake**: Būtina turėti įdiegtą CMake (rekomenduojama versija 3.25 ar vėlesnė);
+- **Kompiliatorius**: Tam, kad galėtumėte sukompiliuoti projektą, reikia turėti C++ kompiliatorių (pvz., GCC, MSVC).
+- **Windows** (jei naudojate Windows): CMake ir `run.bat` failas buvo išbandyti Windows aplinkoje.
+### Projekto struktūra
+- **CMakeLists.txt**: Failas, naudojamas CMake projekto konfigūracijai ir kompilavimui.
+- **run.bat**: Windows `.bat` failas, skirtas paleisti programą.
+### Programos diegimas ir paleidimas
+- **Klonuokite** šį projektą į savo vietinį kompiuterį;
+- **Paleidimas** su run.bat - atliks visus reikalingus veiksmus: sukompiliuos projektą ir paleis jį automatiškai.
+
+## Veikimo palyginimas su kompiliatoriaus optimizavimo vėliavėlėmis:
+
+### Rezultatai:
+
+### *Struct*:
+| Optimizacijos lygis | Veikimo laikas (real)  | Failo dydis |
+|---------------------|------------------------|-------------|
+| `-O1`               | 0m12.623s              | 261KB       |
+| `-O2`               | 0m12.597s              | 261KB       |
+| `-O3`               | 0m11.118s              | 273KB       |
+
+### *Class*:
+| Optimizacijos lygis | Veikimo laikas (real)  | Failo dydis |
+|---------------------|------------------------|-------------|
+| `-O1`               | 0m11.582s              | 264KB       |
+| `-O2`               | 0m9.721s               | 247KB       |
+| `-O3`               | 0m9.360s               | 267KB       |
+
+!["Struct" -O2 veikimo laikas](pav/struct_O2.png)
+!["Class" -O2 veikimo laikai](pav/class_O2.png)
+
+### Išvados:
+- **Veikimo laikas**: Kai optimizavimo lygis didėja, veikimo laikas sumažėja.
+- **Failo dydis**: Kai didėja optimizavimo lygis, tai failo dydis taip pat didėja.
+- **Duomenų tipo palyginimas**: Programa su 'Class' duomenų tipu veikia greičiau nei su 'Struct'.
+
+
 ## v1.0
 ### Naudojimo instrukcija   
 - **CMake**: Būtina turėti įdiegtą CMake (rekomenduojama versija 3.25 ar vėlesnė);
