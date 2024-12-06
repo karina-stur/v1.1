@@ -21,8 +21,8 @@ public:
     Studentas(const std::string& v, const std::string& p, const std::vector<int>& nd, int egz)
         : vardas(v), pavarde(p), namuDarbai(nd), egzaminas(egz) {}
 
-Studentas(const Studentas& other)
-    : vardas(other.vardas), pavarde(other.pavarde), namuDarbai(other.namuDarbai), egzaminas(other.egzaminas) {}
+    Studentas(const Studentas& other)
+        : vardas(other.vardas), pavarde(other.pavarde), namuDarbai(other.namuDarbai), egzaminas(other.egzaminas) {}
 
     ~Studentas() {}
 
@@ -34,6 +34,55 @@ Studentas(const Studentas& other)
             egzaminas = other.egzaminas;
         }
         return *this;
+    }
+
+    friend std::istream& operator>>(std::istream& is, Studentas& studentas) {
+        is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Iveskite studento varda: ";
+        std::getline(is, studentas.vardas);
+
+        std::cout << "Iveskite studento pavarde: ";
+        std::getline(is, studentas.pavarde);
+
+        std::cout << "Norite:\n";
+        std::cout << "1 - Ivesti namu darbu pazymius ranka\n";
+        std::cout << "2 - Sugeneruoti pazymius atsitiktinai\n";
+        int pasirinkimas;
+        do {
+            std::cout << "Pasirinkimas (1 arba 2): ";
+            is >> pasirinkimas;
+            if (pasirinkimas != 1 && pasirinkimas != 2) {
+                std::cout << "Neteisingas pasirinkimas. Bandykite dar karta.\n";
+            }
+        } while (pasirinkimas != 1 && pasirinkimas != 2);
+
+        if (pasirinkimas == 1) {
+            studentas.namuDarbai.clear();
+            std::cout << "Iveskite namu darbu pazymius (iveskite 0, kai baigsite):\n";
+            int pazymys;
+            while (true) {
+                std::cout << "Pazymys: ";
+                is >> pazymys;
+                if (pazymys == 0) break;
+                if (pazymys < 1 || pazymys > 10) {
+                    std::cout << "Iveskite pazymi nuo 1 iki 10.\n";
+                    continue;
+                }
+                studentas.namuDarbai.push_back(pazymys);
+            }
+        }
+        else if (pasirinkimas == 2) {
+            std::cout << "Kiek namu darbu pazymiu sugeneruoti? ";
+            int kiek;
+            is >> kiek;
+            generuotiPazymius(studentas, kiek);
+        }
+
+        std::cout << "Iveskite egzamino pazymi: ";
+        is >> studentas.egzaminas;
+
+        is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return is;
     }
 
     void setVardas(const std::string& v) { vardas = v; }
