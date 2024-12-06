@@ -545,3 +545,19 @@ void testKonteinerius(const std::list<Studentas>& studentaiList, bool pagalVidur
     std::cout << "Kietekai isaugoti per: " << saveKietekaiTime << " sekundziu.\n";
     std::cout << "Bendrai uztruko: " << totalTimeList << " sekundziu.\n";
 }
+
+void trysMetodai() {
+    Studentas a;
+    std::cout << "Iveskite studento informacija:\n";
+    std::cin >> a;
+
+    Studentas b;
+    b = a;
+
+    Studentas c(a);
+
+    std::cout << "\nDemonstracija:\n";
+    std::cout << "Pradinis studentas (a):\n" << a;
+    std::cout << "Po priskyrimo operatoriaus (b = a):\n" << b;
+    std::cout << "Po kopijavimo konstruktoriaus (c(a)):\n" << c;
+}
