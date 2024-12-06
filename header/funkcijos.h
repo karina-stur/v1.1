@@ -15,7 +15,8 @@
 #include <iterator>
 #include <chrono>
 #include <limits>
-#include "studentas.h"
+
+class Studentas;
 
 int readInteger();
 void generuotiStudentuFailus();
@@ -33,8 +34,8 @@ void strategija2(std::list<Studentas>& studentai, bool pagalVidurki, std::list<S
 void strategija3(std::vector<Studentas>& studentai, bool pagalVidurki, std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai);
 void strategija3(std::list<Studentas>& studentai, bool pagalVidurki, std::list<Studentas>& vargsiukai, std::list<Studentas>& kietekai);
 
-void isaugotiStudentuGrupe(const std::vector<Studentas>& studentai, const std::string& failoPavadinimas);
-void isaugotiStudentuGrupe(const std::list<Studentas>& studentai, const std::string& failoPavadinimas);
+void isaugotiStudentuGrupe(const std::vector<Studentas>& studentai);
+void isaugotiStudentuGrupe(const std::list<Studentas>& studentai);
 
 void ivestiStudentuDuomenis(std::vector<Studentas>& studentaiVektorius);
 void ivestiStudentuDuomenis(std::list<Studentas>& studentaiSarasas);
@@ -46,5 +47,7 @@ void testKonteinerius(const std::vector<Studentas>& studentaiVektorius, bool pag
 void testKonteinerius(const std::list<Studentas>& studentaiList, bool pagalVidurki,
     double& totalPartitionTimeList, double& totalNuskriaustukaiSaveTimeList, double& totalKietiakaiSaveTimeList,
     void (*strategija)(std::list<Studentas>&, bool, std::list<Studentas>&, std::list<Studentas>&));
+
+void trysMetodai();
 
 #endif // FUNKCIJOS_H
