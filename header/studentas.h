@@ -1,10 +1,12 @@
 #ifndef STUDENTAS_H
 #define STUDENTAS_H
 
+#include <numeric>
 #include <vector>
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include <iomanip>
 
 class Studentas {
 private:
@@ -18,6 +20,21 @@ public:
 
     Studentas(const std::string& v, const std::string& p, const std::vector<int>& nd, int egz)
         : vardas(v), pavarde(p), namuDarbai(nd), egzaminas(egz) {}
+
+Studentas(const Studentas& other)
+    : vardas(other.vardas), pavarde(other.pavarde), namuDarbai(other.namuDarbai), egzaminas(other.egzaminas) {}
+
+    ~Studentas() {}
+
+    Studentas& operator=(const Studentas& other) {
+        if (this != &other) {
+            vardas = other.vardas;
+            pavarde = other.pavarde;
+            namuDarbai = other.namuDarbai;
+            egzaminas = other.egzaminas;
+        }
+        return *this;
+    }
 
     void setVardas(const std::string& v) { vardas = v; }
     std::string getVardas() const { return vardas; }
