@@ -384,17 +384,60 @@ void testKonteinerius(const std::vector<Studentas>& studentaiVector, bool pagalV
         return scoreA > scoreB;
         });
 
-    std::string nuskriaustukaiFile = pagalVidurki ? "nuskriaustukai_vec_vid.txt" : "nuskriaustukai_vec_med.txt";
-    start = std::chrono::high_resolution_clock::now();
-    isaugotiStudentuGrupe(vargsiukai, nuskriaustukaiFile);
-    end = std::chrono::high_resolution_clock::now();
-    saveNuskriaustukaiTime = std::chrono::duration<double>(end - start).count();
+    int pasirinkimas;
+    std::cout << "Kur norite isvesti studentu duomenis?\n";
+    std::cout << "1 - I ekrana\n";
+    std::cout << "2 - I faila\n";
+    do {
+        std::cout << "Pasirinkimas (1 arba 2): ";
+        std::cin >> pasirinkimas;
+        if (pasirinkimas != 1 && pasirinkimas != 2) {
+            std::cout << "Neteisingas pasirinkimas. Bandykite dar karta.\n";
+        }
+    } while (pasirinkimas != 1 && pasirinkimas != 2);
 
-    std::string kietekaiFile = pagalVidurki ? "kietekai_vec_vid.txt" : "kietekai_vec_med.txt";
-    start = std::chrono::high_resolution_clock::now();
-    isaugotiStudentuGrupe(kietekaiToSave, kietekaiFile);
-    end = std::chrono::high_resolution_clock::now();
-    saveKietekaiTime = std::chrono::duration<double>(end - start).count();
+    if (pasirinkimas == 1) {
+        std::cout << "Vargsiukai (Nuskriaustukai):\n";
+        isaugotiStudentuGrupe(vargsiukai);
+
+        std::cout << "Kietekai:\n";
+        isaugotiStudentuGrupe(kietekaiToSave);
+    }
+    else if (pasirinkimas == 2) {
+        std::string nuskriaustukaiFile = pagalVidurki ? "nuskriaustukai_vec_vid.txt" : "nuskriaustukai_vec_med.txt";
+        start = std::chrono::high_resolution_clock::now();
+        std::ofstream nuskriaustukaiFailas(nuskriaustukaiFile);
+        if (nuskriaustukaiFailas.is_open()) {
+            nuskriaustukaiFailas << std::left << std::setw(20) << "Vardas"
+                << std::setw(20) << "Pavarde"
+                << std::setw(20) << "Galutinis (Vid.)"
+                << "Galutinis (Med.)" << std::endl;
+            nuskriaustukaiFailas << std::string(80, '-') << std::endl;
+            for (const Studentas& studentas : vargsiukai) {
+                nuskriaustukaiFailas << studentas; 
+            }
+            std::cout << "Nuskriaustukai isaugoti i faila: " << nuskriaustukaiFile << std::endl;
+        }
+        end = std::chrono::high_resolution_clock::now();
+        saveNuskriaustukaiTime = std::chrono::duration<double>(end - start).count();
+
+        std::string kietekaiFile = pagalVidurki ? "kietekai_vec_vid.txt" : "kietekai_vec_med.txt";
+        start = std::chrono::high_resolution_clock::now();
+        std::ofstream kietekaiFailas(kietekaiFile);
+        if (kietekaiFailas.is_open()) {
+            kietekaiFailas << std::left << std::setw(20) << "Vardas"
+                << std::setw(20) << "Pavarde"
+                << std::setw(20) << "Galutinis (Vid.)"
+                << "Galutinis (Med.)" << std::endl;
+            kietekaiFailas << std::string(80, '-') << std::endl;
+            for (const Studentas& studentas : kietekaiToSave) {
+                kietekaiFailas << studentas;
+            }
+            std::cout << "Kietekai isaugoti i faila: " << kietekaiFile << std::endl;
+        }
+        end = std::chrono::high_resolution_clock::now();
+        saveKietekaiTime = std::chrono::duration<double>(end - start).count();
+    }
 
     double totalTimeVec = totalPartitionTimeVec + saveNuskriaustukaiTime + saveKietekaiTime;
 
