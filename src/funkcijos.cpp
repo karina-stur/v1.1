@@ -464,15 +464,9 @@ void testKonteinerius(const std::list<Studentas>& studentaiList, bool pagalVidur
     totalPartitionTimeList = std::chrono::duration<double>(end - start).count();
 
     double saveNuskriaustukaiTime = 0.0;
-    double saveKietiakaiTime = 0.0;
+    double saveKietekaiTime = 0.0;
 
     std::list<Studentas>& kietekaiToSave = kietekai.empty() ? listCopy : kietekai;
-
-    kietekaiToSave.sort([&](const Studentas& a, const Studentas& b) {
-        double scoreA = pagalVidurki ? a.skaiciuotiGalutiniVidurki() : a.skaiciuotiGalutiniMediana();
-        double scoreB = pagalVidurki ? b.skaiciuotiGalutiniVidurki() : b.skaiciuotiGalutiniMediana();
-        return scoreA > scoreB;
-        });
 
     if (!vargsiukai.empty()) {
         vargsiukai.sort([&](const Studentas& a, const Studentas& b) {
@@ -482,23 +476,72 @@ void testKonteinerius(const std::list<Studentas>& studentaiList, bool pagalVidur
             });
     }
 
-    std::string nuskriaustukaiFile = pagalVidurki ? "nuskriaustukai_list_vid.txt" : "nuskriaustukai_list_med.txt";
-    start = std::chrono::high_resolution_clock::now();
-    isaugotiStudentuGrupe(vargsiukai, nuskriaustukaiFile);
-    end = std::chrono::high_resolution_clock::now();
-    saveNuskriaustukaiTime = std::chrono::duration<double>(end - start).count();
+    kietekaiToSave.sort([&](const Studentas& a, const Studentas& b) {
+        double scoreA = pagalVidurki ? a.skaiciuotiGalutiniVidurki() : a.skaiciuotiGalutiniMediana();
+        double scoreB = pagalVidurki ? b.skaiciuotiGalutiniVidurki() : b.skaiciuotiGalutiniMediana();
+        return scoreA > scoreB;
+        });
 
-    std::string kietekaiFile = pagalVidurki ? "kietekai_list_vid.txt" : "kietekai_list_med.txt";
-    start = std::chrono::high_resolution_clock::now();
-    isaugotiStudentuGrupe(kietekaiToSave, kietekaiFile);
-    end = std::chrono::high_resolution_clock::now();
-    saveKietiakaiTime = std::chrono::duration<double>(end - start).count();
+    int pasirinkimas;
+    std::cout << "Kur norite isvesti studentu duomenis?\n";
+    std::cout << "1 - I ekrana\n";
+    std::cout << "2 - I faila\n";
+    do {
+        std::cout << "Pasirinkimas (1 arba 2): ";
+        std::cin >> pasirinkimas;
+        if (pasirinkimas != 1 && pasirinkimas != 2) {
+            std::cout << "Neteisingas pasirinkimas. Bandykite dar karta.\n";
+        }
+    } while (pasirinkimas != 1 && pasirinkimas != 2);
 
-    double totalTimeList = totalPartitionTimeList + saveNuskriaustukaiTime + saveKietiakaiTime;
+    if (pasirinkimas == 1) {
+        std::cout << "Vargsiukai (Nuskriaustukai):\n";
+        isaugotiStudentuGrupe(vargsiukai);
+
+        std::cout << "Kietekai:\n";
+        isaugotiStudentuGrupe(kietekaiToSave);
+    }
+    else if (pasirinkimas == 2) {
+        std::string nuskriaustukaiFile = pagalVidurki ? "nuskriaustukai_list_vid.txt" : "nuskriaustukai_list_med.txt";
+        start = std::chrono::high_resolution_clock::now();
+        std::ofstream nuskriaustukaiFailas(nuskriaustukaiFile);
+        if (nuskriaustukaiFailas.is_open()) {
+            nuskriaustukaiFailas << std::left << std::setw(20) << "Vardas"
+                << std::setw(20) << "Pavarde"
+                << std::setw(20) << "Galutinis (Vid.)"
+                << "Galutinis (Med.)" << std::endl;
+            nuskriaustukaiFailas << std::string(80, '-') << std::endl;
+            for (const Studentas& studentas : vargsiukai) {
+                nuskriaustukaiFailas << studentas;
+            }
+            std::cout << "Nuskriaustukai isaugoti i faila: " << nuskriaustukaiFile << std::endl;
+        }
+        end = std::chrono::high_resolution_clock::now();
+        saveNuskriaustukaiTime = std::chrono::duration<double>(end - start).count();
+
+        std::string kietekaiFile = pagalVidurki ? "kietekai_list_vid.txt" : "kietekai_list_med.txt";
+        start = std::chrono::high_resolution_clock::now();
+        std::ofstream kietekaiFailas(kietekaiFile);
+        if (kietekaiFailas.is_open()) {
+            kietekaiFailas << std::left << std::setw(20) << "Vardas"
+                << std::setw(20) << "Pavarde"
+                << std::setw(20) << "Galutinis (Vid.)"
+                << "Galutinis (Med.)" << std::endl;
+            kietekaiFailas << std::string(80, '-') << std::endl;
+            for (const Studentas& studentas : kietekaiToSave) {
+                kietekaiFailas << studentas;
+            }
+            std::cout << "Kietekai isaugoti i faila: " << kietekaiFile << std::endl;
+        }
+        end = std::chrono::high_resolution_clock::now();
+        saveKietekaiTime = std::chrono::duration<double>(end - start).count();
+    }
+
+    double totalTimeList = totalPartitionTimeList + saveNuskriaustukaiTime + saveKietekaiTime;
 
     std::cout << std::fixed << std::setprecision(6);
     std::cout << "Grupavimas uztruko: " << totalPartitionTimeList << " sekundziu.\n";
     std::cout << "Nuskriaustukai isaugoti per: " << saveNuskriaustukaiTime << " sekundziu.\n";
-    std::cout << "Kietekai isaugoti per: " << saveKietiakaiTime << " sekundziu.\n";
+    std::cout << "Kietekai isaugoti per: " << saveKietekaiTime << " sekundziu.\n";
     std::cout << "Bendrai uztruko: " << totalTimeList << " sekundziu.\n";
 }
