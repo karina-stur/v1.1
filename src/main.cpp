@@ -113,6 +113,6 @@ int main() {
     else {
         std::cerr << "Neteisingas konteinerio pasirinkimas.\n";
     }
-
+    trysMetodai();
     return 0;
 }
