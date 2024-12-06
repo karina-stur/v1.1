@@ -108,20 +108,19 @@ public:
     int getEgzaminas() const { return egzaminas; }
 
     double skaiciuotiGalutiniVidurki() const {
+        if (namuDarbai.empty()) return egzaminas;
         double total = std::accumulate(namuDarbai.begin(), namuDarbai.end(), 0);
         return (total + egzaminas) / (namuDarbai.size() + 1);
     }
 
     double skaiciuotiGalutiniMediana() const {
+        if (namuDarbai.empty()) return egzaminas;
         std::vector<int> sortedNamuDarbai = namuDarbai;
         std::sort(sortedNamuDarbai.begin(), sortedNamuDarbai.end());
-
-        if (sortedNamuDarbai.size() % 2 == 0) {
-            return (sortedNamuDarbai[sortedNamuDarbai.size() / 2 - 1] + sortedNamuDarbai[sortedNamuDarbai.size() / 2]) / 2.0;
-        }
-        else {
-            return sortedNamuDarbai[sortedNamuDarbai.size() / 2];
-        }
+        size_t size = sortedNamuDarbai.size();
+        return (size % 2 == 0) ?
+            (sortedNamuDarbai[size / 2 - 1] + sortedNamuDarbai[size / 2]) / 2.0
+            : sortedNamuDarbai[size / 2];
     }
 };
 
