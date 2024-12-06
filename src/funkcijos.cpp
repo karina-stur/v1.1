@@ -191,61 +191,37 @@ void nuskaitytiStudentus(const std::string& failoPavadinimas, std::list<Studenta
     }
 }
 
-void isaugotiStudentuGrupe(const std::vector<Studentas>& studentai, const std::string& failoPavadinimas) {
+void isaugotiStudentuGrupe(const std::vector<Studentas>& studentai) {
     if (studentai.empty()) {
-        std::cerr << "Studentu sarasas tuscias, nera ka irasyti!" << std::endl;
+        std::cerr << "Studentu nera, nera ka irasyti!" << std::endl;
         return;
     }
 
-    std::ofstream failas(failoPavadinimas);
-    if (!failas.is_open()) {
-        std::cerr << "Nepavyko sukurti failo: " << failoPavadinimas << std::endl;
-        return;
-    }
-
-    failas << std::left << std::setw(20) << "Vardas"
+    std::cout << std::left << std::setw(20) << "Vardas"
         << std::setw(20) << "Pavarde"
         << std::setw(20) << "Galutinis (Vid.)"
         << "Galutinis (Med.)" << std::endl;
-    failas << std::string(80, '-') << std::endl;
+    std::cout << std::string(80, '-') << std::endl;
 
     for (const Studentas& studentas : studentai) {
-        double galutinisVidurkis = skaiciuotiGalutiniVidurki(studentas.getNamuDarbai(), studentas.getEgzaminas());
-        double galutinisMediana = skaiciuotiGalutiniMediana(studentas.getNamuDarbai());
-
-        failas << std::left << std::setw(20) << studentas.getVardas()
-            << std::setw(20) << studentas.getPavarde()
-            << std::setw(20) << std::fixed << std::setprecision(2) << galutinisVidurkis
-            << std::fixed << std::setprecision(2) << galutinisMediana << std::endl;
+        std::cout << studentas;
     }
 }
 
-void isaugotiStudentuGrupe(const std::list<Studentas>& studentai, const std::string& failoPavadinimas) {
+void isaugotiStudentuGrupe(const std::list<Studentas>& studentai) {
     if (studentai.empty()) {
-        std::cerr << "Studentu sarasas tuscias, nera ka irasyti!" << std::endl;
+        std::cerr << "Studentu nera, nera ka irasyti!" << std::endl;
         return;
     }
 
-    std::ofstream failas(failoPavadinimas);
-    if (!failas.is_open()) {
-        std::cerr << "Nepavyko sukurti failo: " << failoPavadinimas << std::endl;
-        return;
-    }
-
-    failas << std::left << std::setw(20) << "Vardas"
+    std::cout << std::left << std::setw(20) << "Vardas"
         << std::setw(20) << "Pavarde"
         << std::setw(20) << "Galutinis (Vid.)"
         << "Galutinis (Med.)" << std::endl;
-    failas << std::string(80, '-') << std::endl;
+    std::cout << std::string(80, '-') << std::endl;
 
     for (const Studentas& studentas : studentai) {
-        double galutinisVidurkis = skaiciuotiGalutiniVidurki(studentas.getNamuDarbai(), studentas.getEgzaminas());
-        double galutinisMediana = skaiciuotiGalutiniMediana(studentas.getNamuDarbai());
-
-        failas << std::left << std::setw(20) << studentas.getVardas()
-            << std::setw(20) << studentas.getPavarde()
-            << std::setw(20) << std::fixed << std::setprecision(2) << galutinisVidurkis
-            << std::fixed << std::setprecision(2) << galutinisMediana << std::endl;
+        std::cout << studentas;
     }
 }
 
