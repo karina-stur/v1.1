@@ -85,6 +85,14 @@ public:
         return is;
     }
 
+    friend std::ostream& operator<<(std::ostream& out, const Studentas& s) {
+        out << std::left << std::setw(20) << s.vardas
+            << std::setw(20) << s.pavarde
+            << std::setw(20) << std::fixed << std::setprecision(2) << s.skaiciuotiGalutiniVidurki()
+            << std::fixed << std::setprecision(2) << s.skaiciuotiGalutiniMediana() << std::endl;
+        return out;
+    }
+
     void setVardas(const std::string& v) { vardas = v; }
     std::string getVardas() const { return vardas; }
 
