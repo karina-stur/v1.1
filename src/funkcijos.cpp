@@ -64,7 +64,6 @@ void generuotiPazymius(Studentas& studentas, int namuDarbuKiekis) {
     for (int i = 0; i < namuDarbuKiekis; ++i) {
         studentas.addNamuDarbai(generuotiAtsitiktiniPazymi());
     }
-    studentas.setEgzaminas(generuotiAtsitiktiniPazymi());
 }
 
 double skaiciuotiGalutiniVidurki(const std::vector<int>& namuDarbai, int egzaminas) {
