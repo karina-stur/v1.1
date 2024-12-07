@@ -113,6 +113,11 @@ int main() {
     else {
         std::cerr << "Neteisingas konteinerio pasirinkimas.\n";
     }
-    trysMetodai();
+    //trysMetodai();
+
+    //Zmogus zmogus;
+
+    Studentas student("Jonas", "Jonaitis", { 9, 8, 7 }, 10);
+    student.printInfo();
     return 0;
 }
