@@ -1,28 +1,24 @@
 #ifndef STUDENTAS_H
 #define STUDENTAS_H
 
-#include <numeric>
+#include "zmogus.h"
 #include <vector>
-#include <string>
+#include <numeric>
 #include <algorithm>
-#include <iostream>
 #include <iomanip>
 
-class Studentas {
+class Studentas : public Zmogus {
 private:
-    std::string vardas;
-    std::string pavarde;
     std::vector<int> namuDarbai;
     int egzaminas;
 
 public:
-    Studentas() : vardas(""), pavarde(""), egzaminas(0) {}
-
+    Studentas() : Zmogus(), egzaminas(0) {}
     Studentas(const std::string& v, const std::string& p, const std::vector<int>& nd, int egz)
-        : vardas(v), pavarde(p), namuDarbai(nd), egzaminas(egz) {}
+        : Zmogus(v, p), namuDarbai(nd), egzaminas(egz) {}
 
     Studentas(const Studentas& other)
-        : vardas(other.vardas), pavarde(other.pavarde), namuDarbai(other.namuDarbai), egzaminas(other.egzaminas) {}
+        : Zmogus(other.vardas, other.pavarde), namuDarbai(other.namuDarbai), egzaminas(other.egzaminas) {}
 
     ~Studentas() {}
 
@@ -36,13 +32,20 @@ public:
         return *this;
     }
 
+    void setNamuDarbai(const std::vector<int>& nd) {
+        namuDarbai = nd;
+    }
+
+    void addNamuDarbai(int pazymys) {
+        namuDarbai.push_back(pazymys);
+    }
+
     friend std::istream& operator>>(std::istream& is, Studentas& studentas) {
-        is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "Iveskite studento varda: ";
-        std::getline(is, studentas.vardas);
+        std::getline(is >> std::ws, studentas.vardas);
 
         std::cout << "Iveskite studento pavarde: ";
-        std::getline(is, studentas.pavarde);
+        std::getline(is >> std::ws, studentas.pavarde);
 
         std::cout << "Norite:\n";
         std::cout << "1 - Ivesti namu darbu pazymius ranka\n";
@@ -75,7 +78,7 @@ public:
             std::cout << "Kiek namu darbu pazymiu sugeneruoti? ";
             int kiek;
             is >> kiek;
-            generuotiPazymius(studentas, kiek);
+            studentas.generuotiPazymius(kiek);
         }
 
         std::cout << "Iveskite egzamino pazymi: ";
@@ -93,19 +96,12 @@ public:
         return out;
     }
 
-    void setVardas(const std::string& v) { vardas = v; }
-    std::string getVardas() const { return vardas; }
-
-    void setPavarde(const std::string& p) { pavarde = p; }
-    std::string getPavarde() const { return pavarde; }
-
-    void setNamuDarbai(const std::vector<int>& nd) { namuDarbai = nd; }
-    std::vector<int> getNamuDarbai() const { return namuDarbai; }
-
-    void addNamuDarbai(int pazymys) { namuDarbai.push_back(pazymys); }
-
-    void setEgzaminas(int eg) { egzaminas = eg; }
-    int getEgzaminas() const { return egzaminas; }
+    void generuotiPazymius(int kiek) {
+        namuDarbai.clear();
+        for (int i = 0; i < kiek; ++i) {
+            namuDarbai.push_back(1 + rand() % 10);
+        }
+    }
 
     double skaiciuotiGalutiniVidurki() const {
         if (namuDarbai.empty()) return egzaminas;
@@ -121,6 +117,10 @@ public:
         return (size % 2 == 0) ?
             (sortedNamuDarbai[size / 2 - 1] + sortedNamuDarbai[size / 2]) / 2.0
             : sortedNamuDarbai[size / 2];
+    }
+
+    virtual void printInfo() const override {
+        std::cout << *this;
     }
 };
 
