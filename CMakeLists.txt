@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(v1.2)
+project(v1.5)
 include_directories(header)
 set(SOURCES src/main.cpp src/funkcijos.cpp) 
-add_executable(v1.2 ${SOURCES})
+add_executable(v1.5 ${SOURCES})
