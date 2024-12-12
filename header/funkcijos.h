@@ -142,10 +142,40 @@ void strategija3(std::vector<Studentas>& studentai, bool pagalVidurki, std::vect
  */
 void strategija3(std::list<Studentas>& studentai, bool pagalVidurki, std::list<Studentas>& vargsiukai, std::list<Studentas>& kietekai);
 
+/**
+ * @brief Isaugoti studentu grupe i faila (naudojant vektorius)
+ *
+ * Funkcija isaugoti studentu grupe i faila naudojant vektorius.
+ *
+ * @param studentai Studentai, kuriuos norima issaugoti
+ */
 void isaugotiStudentuGrupe(const std::vector<Studentas>& studentai);
+
+/**
+ * @brief Isaugoti studentu grupe i faila (naudojant sarasus)
+ *
+ * Funkcija isaugoti studentu grupe i faila naudojant sarasus.
+ *
+ * @param studentai Studentai, kuriuos norima issaugoti
+ */
 void isaugotiStudentuGrupe(const std::list<Studentas>& studentai);
 
+/**
+ * @brief Ivesti studentu duomenis i vektoriu
+ *
+ * Funkcija leidzia ivesti studentu duomenis ir issaugoti juos vektoriuje.
+ *
+ * @param studentaiVektorius Vektorius, kuriame bus issaugoti studentu duomenys
+ */
 void ivestiStudentuDuomenis(std::vector<Studentas>& studentaiVektorius);
+
+/**
+ * @brief Ivesti studentu duomenis i sarasa
+ *
+ * Funkcija leidzia ivesti studentu duomenis ir issaugoti juos sarase.
+ *
+ * @param studentaiSarasas Sarasas, kuriame bus issaugoti studentu duomenys
+ */
 void ivestiStudentuDuomenis(std::list<Studentas>& studentaiSarasas);
 
 void testKonteinerius(const std::vector<Studentas>& studentaiVektorius, bool pagalVidurki,
