@@ -1,3 +1,9 @@
+/**
+ * @file Funkcijos.h
+ * @brief Apraso naudojamas funkcijas.
+ *
+ * Siame faile pateikiamos funkcijos.
+ */
 #ifndef FUNKCIJOS_H
 #define FUNKCIJOS_H
 
