@@ -3,5 +3,5 @@ cmake --install .
 cmake --build .
 copy src\*.txt Debug\*.txt
 cd Debug\
-v1.5.exe
+v2.0.exe
 pause
