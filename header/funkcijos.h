@@ -50,7 +50,24 @@ void generuotiStudentuFailus();
  */
 void generuotiPazymius(Studentas& studentas, int namuDarbuKiekis);
 
+/**
+ * @brief Nuskaityti studentus is failo i vektoriu
+ *
+ * Funkcija nuskaityti studentu duomenis is failo ir juos issaugoti vektoriuje.
+ *
+ * @param failoPavadinimas Failo pavadinimas is kurio bus nuskaityti studentai
+ * @param studentai Vektorius, kuriame bus issaugoti studentai
+ */
 void nuskaitytiStudentus(const std::string& failoPavadinimas, std::vector<Studentas>& studentai);
+
+/**
+ * @brief Nuskaityti studentus is failo i sarasa
+ *
+ * Funkcija nuskaityti studentu duomenis is failo ir juos issaugoti sarase.
+ *
+ * @param failoPavadinimas Failo pavadinimas is kurio bus nuskaityti studentai
+ * @param studentai Sarasas, kuriame bus issaugoti studentai
+ */
 void nuskaitytiStudentus(const std::string& failoPavadinimas, std::list<Studentas>& studentai);
 
 void strategija1( std::vector<Studentas>& studentai, bool pagalVidurki, std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai);
