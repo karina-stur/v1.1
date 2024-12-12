@@ -178,14 +178,43 @@ void ivestiStudentuDuomenis(std::vector<Studentas>& studentaiVektorius);
  */
 void ivestiStudentuDuomenis(std::list<Studentas>& studentaiSarasas);
 
+/**
+ * @brief Testuoti konteinerius su duomenimis
+ *
+ * Funkcija atlieka konteineriu testavimus su studentu duomenimis naudojant pasirinktus rusiavimo metodus.
+ *
+ * @param studentaiVektorius Studentai, kurie bus naudojami testavimui
+ * @param pagalVidurki Nustato, ar rusiavimas bus pagal vidurki
+ * @param totalPartitionTimeVec Laikas partition funkcijai
+ * @param totalNuskriaustukaiSaveTimeVec Laikas isaugoti vargsesnius studentus
+ * @param totalKietiakaiSaveTimeVec Laikas isaugoti kietesnius studentus
+ * @param strategija Funkcija, kuri apdoroja studentus pagal pasirinkta strategija
+ */
 void testKonteinerius(const std::vector<Studentas>& studentaiVektorius, bool pagalVidurki,
     double& totalPartitionTimeVec, double& totalNuskriaustukaiSaveTimeVec, double& totalKietiakaiSaveTimeVec,
     void (*strategija)(std::vector<Studentas>&, bool, std::vector<Studentas>&, std::vector<Studentas>&));
 
+/**
+ * @brief Testuoti konteinerius su duomenimis
+ *
+ * Funkcija atlieka konteineriu testavimus su studentu duomenimis naudojant pasirinktus rusiavimo metodus.
+ *
+ * @param studentaiList Studentai, kurie bus naudojami testavimui
+ * @param pagalVidurki Nustato, ar rusiavimas bus pagal vidurki
+ * @param totalPartitionTimeList Laikas partition funkcijai
+ * @param totalNuskriaustukaiSaveTimeList Laikas isaugoti vargsesnius studentus
+ * @param totalKietiakaiSaveTimeList Laikas isaugoti kietesnius studentus
+ * @param strategija Funkcija, kuri apdoroja studentus pagal pasirinkta strategija
+ */
 void testKonteinerius(const std::list<Studentas>& studentaiList, bool pagalVidurki,
     double& totalPartitionTimeList, double& totalNuskriaustukaiSaveTimeList, double& totalKietiakaiSaveTimeList,
     void (*strategija)(std::list<Studentas>&, bool, std::list<Studentas>&, std::list<Studentas>&));
 
+/**
+ * @brief Triju metodu testavimas
+ *
+ * Funkcija atlieka triju metodu testavimus.
+ */
 void trysMetodai();
 
 #endif // FUNKCIJOS_H
