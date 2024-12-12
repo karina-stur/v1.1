@@ -12,6 +12,11 @@ int main() {
     std::cin >> generateOption;
     std::cin.ignore();
 
+    /**
+     * @brief Tikrina, ar vartotojas nori sugeneruoti studentu failus.
+     *
+     * Jei vartotojas pasirenka "y" arba "Y", iskvieciama funkcija generuotiStudentuFailus.
+     */
     if (generateOption == 'y' || generateOption == 'Y') {
         generuotiStudentuFailus();
     }
@@ -32,6 +37,13 @@ int main() {
     std::cout << "3 - Naudoti patobulinta strategija nr.2\n";
     int strategija = readInteger();
 
+    /**
+     * @brief Pasirinkimas, jei vartotojas nusprendzia naudoti vector konteineri.
+     *
+     * Jei pasirenkamas vector konteineris, priklausomai nuo vartotojo pasirinkimo,
+     * arba ivesti studentu duomenis ranka, arba nuskaityti juos is failo.
+     * Po to pasirenkama ir pritaikoma norima strategija.
+     */
     if (containerChoice == 1) {
         std::vector<Studentas> studentaiVektorius;
 
@@ -55,6 +67,11 @@ int main() {
         kriterijus = readInteger();
         bool pagalVidurki = (kriterijus == 1);
 
+        /**
+         * @brief Pasirenkama ir pritaikoma strategija pagal vartotojo pasirinkima.
+         *
+         * Naudojama funkcija testKonteinerius, kad atlikti reikiamus veiksmus su vektoriu.
+         */
         if (strategija == 1) {
             double totalPartitionTimeVec, totalNuskriaustukaiSaveTimeVec, totalKietiakaiSaveTimeVec;
             testKonteinerius(studentaiVektorius, pagalVidurki, totalPartitionTimeVec,
@@ -71,6 +88,13 @@ int main() {
                 totalNuskriaustukaiSaveTimeVec, totalKietiakaiSaveTimeVec, strategija3);
         }
     }
+    /**
+     * @brief Pasirinkimas, jei vartotojas nusprendzia naudoti list konteineri.
+     *
+     * Jei pasirenkamas list konteineris, priklausomai nuo vartotojo pasirinkimo,
+     * arba ivesti studentu duomenis ranka, arba nuskaityti juos is failo.
+     * Po to pasirenkama ir pritaikoma norima strategija.
+     */
     else if (containerChoice == 2) {
         std::list<Studentas> studentaiSarasas;
 
@@ -94,6 +118,11 @@ int main() {
         kriterijus = readInteger();
         bool pagalVidurki = (kriterijus == 1);
 
+        /**
+         * @brief Pasirenkama ir pritaikoma strategija pagal vartotojo pasirinkima.
+         *
+         * Naudojama funkcija testKonteinerius, kad atlikti reikiamus veiksmus su list.
+         */
         if (strategija == 1) {
             double totalPartitionTimeList, totalNuskriaustukaiSaveTimeList, totalKietiakaiSaveTimeList;
             testKonteinerius(studentaiSarasas, pagalVidurki, totalPartitionTimeList,
@@ -113,10 +142,22 @@ int main() {
     else {
         std::cerr << "Neteisingas konteinerio pasirinkimas.\n";
     }
-    //trysMetodai();
+
+    /**
+     * @brief Testuoja tris metodus.
+     *
+     * Tikrinamas triju metodu veikimas.
+     */
+    trysMetodai();
 
     //Zmogus zmogus;
 
+    /**
+     * @brief Sukuria studento objekta ir isveda jo informacija.
+     *
+     * Sukuriamas studento objektas su vardo, pavardes, pazymiu ir amziaus duomenimis,
+     * po to isvedama visa informacija apie si studenta.
+     */
     Studentas student("Jonas", "Jonaitis", { 9, 8, 7 }, 10);
     student.printInfo();
     return 0;
