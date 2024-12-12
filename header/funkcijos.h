@@ -70,7 +70,28 @@ void nuskaitytiStudentus(const std::string& failoPavadinimas, std::vector<Studen
  */
 void nuskaitytiStudentus(const std::string& failoPavadinimas, std::list<Studentas>& studentai);
 
-void strategija1( std::vector<Studentas>& studentai, bool pagalVidurki, std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai);
+/**
+ * @brief Pirmoji strategija studentu rusiavimui (naudoja vektorius)
+ *
+ * Funkcija, atliekanti pirma strategija studentu padalinimui i dvi grupes (vargsiukai ir kietekai) pagal pasirinktus kriterijus.
+ *
+ * @param studentai Studentai, kurie bus apdoroti
+ * @param pagalVidurki Nustato, ar rusiavimas bus pagal vidurki
+ * @param vargsiukai Grupes, kuriuose bus issaugoti vargsesni studentai
+ * @param kietekai Grupes, kuriuose bus issaugoti geresni studentai
+ */
+void strategija1(std::vector<Studentas>& studentai, bool pagalVidurki, std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai);
+
+/**
+ * @brief Pirmoji strategija studentu rusiavimui (naudoja sarasa)
+ *
+ * Funkcija, atliekanti pirma strategija studentu padalinimui i dvi grupes (vargsiukai ir kietekai) pagal pasirinktus kriterijus.
+ *
+ * @param studentai Studentai, kurie bus apdoroti
+ * @param pagalVidurki Nustato, ar rusiavimas bus pagal vidurki
+ * @param vargsiukai Grupes, kuriuose bus issaugoti vargsesni studentai
+ * @param kietekai Grupes, kuriuose bus issaugoti geresni studentai
+ */
 void strategija1(std::list<Studentas>& studentai, bool pagalVidurki, std::list<Studentas>& vargsiukai, std::list<Studentas>& kietekai);
 
 void strategija2(std::vector<Studentas>& studentai, bool pagalVidurki, std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietekai);
