@@ -24,6 +24,14 @@
 
 class Studentas;
 
+/**
+ * @brief Nuskaityti sveika skaiciu nuo vartotojo
+ *
+ * Funkcija atlieka sveiko skaiciaus nuskaityma is vartotojo.
+ *
+ * @return Nuskaitytas sveikas skaicius
+ */
+
 int readInteger();
 void generuotiStudentuFailus();
 void generuotiPazymius(Studentas& studentas, int namuDarbuKiekis);
