@@ -31,9 +31,23 @@ class Studentas;
  *
  * @return Nuskaitytas sveikas skaicius
  */
-
 int readInteger();
+
+/**
+ * @brief Generuoti studentu failus
+ *
+ * Funkcija generuoja studentu duomenis ir isaugo juos failuose.
+ */
 void generuotiStudentuFailus();
+
+/**
+ * @brief Generuoti pazymius studentui
+ *
+ * Funkcija sugeneruoja atsitiktinius pazymius studentui.
+ *
+ * @param studentas Studentas, kuriam bus sugeneruoti pazymiai
+ * @param namuDarbuKiekis Namu darbu kiekis, kuriems bus sugeneruoti pazymiai
+ */
 void generuotiPazymius(Studentas& studentas, int namuDarbuKiekis);
 
 void nuskaitytiStudentus(const std::string& failoPavadinimas, std::vector<Studentas>& studentai);
