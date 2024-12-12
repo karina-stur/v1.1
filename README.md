@@ -1,3 +1,28 @@
+## v1.5
+
+Šio leidimo pagrindinis tikslas – sukurti abstrakčią bazinę klasę Zmogus ir iš jos išvestinę klasę Studentas, laikantis objektinio programavimo principų. Programa yra pilnai funkcionali ir atitinka 1.5 versijos reikalavimus.
+
+### 1. Abstrakti bazinė klasė Zmogus:
+
+Apima bendras savybes ir metodus, susijusius su žmogumi (vardas, pavarde). Turi bent vieną grynai virtualią funkciją (printInfo), todėl yra abstrakti. Negali būti iškviečiama tiesiogiai – galima kurti tik išvestinių klasių objektus.
+
+### 2. Išvestinė klasė Studentas:
+
+Paveldi Zmogus savybes ir funkcijas, papildomai turi studento atributus:
+- Namų darbų pažymiai (namuDarbai).
+- Egzamino pažymys (egzaminas).
+- Įgyvendina bazinės klasės metodą printInfo.
+
+### 3. Pilnai veikianti programa:
+
+- Leidžia įvesti studentų vardus, pavardes, namų darbų ir egzamino pažymius rankiniu būdu arba sugeneruoti juos atsitiktinai.
+- Skaičiuoja galutinį pažymį pagal vidurkį ir medianą.
+
+### 4. 1.2 versijos logikos palaikymas:
+
+- Programa išlaiko 1.2 versijos metodų logiką: kopijavimo konstruktorius, kopijavimo priskyrimo operatorius ir destruktorius.
+
+
 ## v1.2
 
 Tai yra patobulinta programa, kuri sukurta pagal praeitą versiją (version 1.1). Ši programa leidžia valdyti ir analizuoti studentų duomenis. Ji apima studentų vardo, pavardės, namų darbų pažymių ir egzamino pažymio įvedimą bei galutinio pažymio skaičiavimą. Programoje taikomi **perdengti metodai** (operatoriai), leidžiantys įvesti duomenis ir išvesti rezultatus tiek rankiniu, tiek automatiniu būdu, taip pat išsaugoti duomenis į failus.
