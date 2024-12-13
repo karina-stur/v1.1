@@ -1,3 +1,30 @@
+# v2.0
+
+Šiame projekte realizuotas studentų valdymo sistema, naudojant **C++** ir įtraukiant šias funkcijas:
+- **Doxygen dokumentacija**: Automatiškai generuojama dokumentacija projekto klasėms ir funkcijoms.
+- **Unit Testai su Google Test**: Užtikrinama projekto funkcionalumo patikimumas per vienetinius testus.
+
+
+## Dokumentacija
+
+Dokumentacija generuojama naudojant **Doxygen** įrankį. Ji pateikia išsamią informaciją apie visas klases, funkcijas ir jų parametrus.
+
+### Dokumentacijos peržiūra
+1. Pereikite į `html/` katalogą.
+2. Atidarykite `index.html` savo interneto naršyklėje.
+
+
+## Unit Testai
+
+Vienetiniai testai realizuoti naudojant **Google Test**. Šie testai užtikrina:
+- Pagrindinio funkcionalumo patikimumą.
+- Klaidų prevenciją esant kodo pakeitimams.
+
+### Paleidimas
+1. Įsitikinkite, kad Google Test biblioteka tinkamai prijungta.
+2. Sugeneruokite testų projektą su testavimas.cpp failu. Paleiskite projektą iš **Visual Studio Test Explorer** arba vykdykite testų vykdomąjį failą.
+
+
 ## v1.5
 
 Šio leidimo pagrindinis tikslas – sukurti abstrakčią bazinę klasę Zmogus ir iš jos išvestinę klasę Studentas, laikantis objektinio programavimo principų. Programa yra pilnai funkcionali ir atitinka 1.5 versijos reikalavimus.
